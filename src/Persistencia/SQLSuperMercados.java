@@ -15,7 +15,7 @@ public class SQLSuperMercados {
 	 *****************************************************************/
 	/**
 	 * Cadena que representa el tipo de consulta que se va a realizar en las sentencias de acceso a la base de datos
-	 * Se renombra acá para facilitar la escritura de las sentencias
+	 * Se renombra acï¿½ para facilitar la escritura de las sentencias
 	 */
 	private final static String SQL = PersistenciaSuperAndes.SQL;
 
@@ -23,13 +23,13 @@ public class SQLSuperMercados {
 	 * 			Atributos
 	 *****************************************************************/
 	/**
-	 * El manejador de persistencia general de la aplicación
+	 * El manejador de persistencia general de la aplicaciï¿½n
 	 */
 	private PersistenciaSuperAndes pp;
 	
 	/**
 	 * Constructor
-	 * @param pp - El Manejador de persistencia de la aplicación
+	 * @param pp - El Manejador de persistencia de la aplicaciï¿½n
 	 */
 	public SQLSuperMercados (PersistenciaSuperAndes pp)
 	{
@@ -42,15 +42,15 @@ public class SQLSuperMercados {
 	 * @param nombre
 	 * @return
 	 */
-	public long adicionarBar (PersistenceManager pm, long idBar, String nombre) 
+	public long adicionarSuperMercado (PersistenceManager pm, long idSuperMercado, String nombre) 
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaSuperMercados() + "(id, nombre) values (?, ?)");
-        q.setParameters(idBar, nombre);
+        q.setParameters(idSuperMercado, nombre);
         return (long) q.executeUnique();
 	}
 
 	/**
-	 * Crea y ejecuta la sentencia SQL para encontrar la información de LOS BARES de la 
+	 * Crea y ejecuta la sentencia SQL para encontrar la informaciï¿½n de LOS BARES de la 
 	 * base de datos de Parranderos
 	 * @param pm - El manejador de persistencia
 	 * @return Una lista de objetos BAR
@@ -60,6 +60,29 @@ public class SQLSuperMercados {
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaSuperMercados());
 		q.setResultClass(SuperMercado.class);
 		return (List<SuperMercado>) q.executeList();
+	}
+	
+	public SuperMercado darSuperMercadoPorId (PersistenceManager pm, long idSuperMercado) 
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaSuperMercados() + " WHERE id = ?");
+		q.setResultClass(SuperMercado.class);
+		q.setParameters(idSuperMercado);
+		return (SuperMercado) q.executeUnique();
+	}
+	
+	public List<SuperMercado> darConsumidoresPorNombre (PersistenceManager pm, String nombreSuperMercado) 
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaSuperMercados() + " WHERE nombre = ?");
+		q.setResultClass(SuperMercado.class);
+		q.setParameters(nombreSuperMercado);
+		return (List<SuperMercado>) q.executeList();
+	}
+	
+	public long eliminarSuperMercadoPorId (PersistenceManager pm, long idSuperMercado)
+	{
+        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaSuperMercados() + " WHERE id = ?");
+        q.setParameters(idSuperMercado);
+        return (long) q.executeUnique();            
 	}
 
 }

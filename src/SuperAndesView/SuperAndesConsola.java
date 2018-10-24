@@ -60,7 +60,7 @@ public class SuperAndesConsola {
 		System.out.println("---------ISIS 2304 - Sistemas Transaccionales----------");
 		System.out.println("---------------------Iteracion 1----------------------");
 		System.out.println("MENU:");
-		System.out.println("1. Cargar toda la informacion dada una fuente de datos (small,medium, large).");
+		System.out.println("1. ");
 		System.out.println("2: Registrar un producto");
 		System.out.println("4. Registrar una sucursal");
 	}

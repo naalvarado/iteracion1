@@ -128,6 +128,10 @@ public class PersistenciaSuperAndes {
 		tablas.add("Local");
 		//14
 		tablas.add("Estante");
+		//15
+		tablas.add("Proveedores");
+		//16
+		tablas.add("ProveedorSupermercado");
 }
 	/**
 	 * Constructor privado, que recibe los nombres de las tablas en un objeto Json - Patr�n SINGLETON
@@ -203,6 +207,14 @@ public class PersistenciaSuperAndes {
 	public String darTablaPedidos()
 	{
 		return tablas.get(12);
+	}
+	
+	public String darTablaProveedores() {
+		return tablas.get(15);
+	}
+	
+	public String darTablaProveedorSupermercado() {
+		return tablas.get(16);
 	}
 	/**
 	 * Constructor que toma los nombres de las tablas de la base de datos del objeto tableConfig
@@ -336,7 +348,7 @@ public class PersistenciaSuperAndes {
             System.out.println("idSuper");
             long idSuper = nextval ();
             System.out.println("LanzaraException");
-            long tuplasInsertadas = sqlSuperMercado.adicionarBar(pm, idSuper, nombre);
+            long tuplasInsertadas = sqlSuperMercado.adicionarSuperMercado(pm, idSuper, nombre);
             tx.commit();
 
             log.trace ("Inserci�n de Bar: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");
