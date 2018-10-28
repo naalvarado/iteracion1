@@ -7,26 +7,16 @@ public class ReordenBodega {
 	private Long ID_Producto;
 	private int nivelReorden;
 	
-	private BodegaPerecedero bodegaP;
-	private BodegaNoPerecedero bodegaNoP;
+	private Bodega bodega;
 	private ArrayList<Perecedero> productosP;
 	private ArrayList<NoPerecedero> productosNoP;
 	
 	// Constructor para un producto perecedero
-	public ReordenBodega(Long pID, int pNivelR, BodegaPerecedero pBodega) {
+	public ReordenBodega(Long pID, int pNivelR, Bodega pBodega) {
 		this.ID_Producto = pID;
 		this.nivelReorden  = pNivelR;
-		this.bodegaP = pBodega;
+		this.bodega = pBodega;
 		this.productosP = new ArrayList<>(); 
-		this.bodegaNoP = null;
-	}
-	// Constructor para un producto NO perecedero
-	public ReordenBodega(Long pID, int pNivelR, BodegaNoPerecedero pBodega) {
-		this.ID_Producto = pID;
-		this.nivelReorden  = pNivelR;
-		this.bodegaNoP = pBodega;
-		this.productosNoP = new ArrayList<>(); 
-		this.productosP = null;
 	}
 	
 	public Long getIdProducto() {

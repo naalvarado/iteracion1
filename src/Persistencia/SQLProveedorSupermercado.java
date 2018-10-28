@@ -6,6 +6,7 @@ import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
 import Negocio.Proveedor;
+import Negocio.ProveedorSupermercado;
 
 public class SQLProveedorSupermercado {
 	
@@ -18,7 +19,6 @@ public class SQLProveedorSupermercado {
 		this.pp = pp;
 	}
 	
-	// TODO completar la clase ProveedorSupermercado para poder seguir aca
 	
 	public long adicionarProveedorSupermercado (PersistenceManager pm, long idProveedor, long idSupermercado) 
 	{
@@ -29,26 +29,26 @@ public class SQLProveedorSupermercado {
         
 	}
 	
-	/**public List<> darProveedorPorId (PersistenceManager pm, long idProveedor) 
+	public List<ProveedorSupermercado> darProveedoresSuperPorProveedor (PersistenceManager pm, long pID) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaProveedores() + " WHERE id = ?");
-		q.setResultClass(Proveedor.class);
-		q.setParameters(idProveedor);
-		return (Proveedor) q.executeUnique();
-	}**/
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaProveedorSupermercado() + " WHERE id_proveedor = ?");
+		q.setResultClass(ProveedorSupermercado.class);
+		q.setParameters(pID);
+		return (List<ProveedorSupermercado>) q.executeList();
+	}
 	
-	/**public List<Proveedor> darProveedoresPorNombre (PersistenceManager pm, String nombreProveedor) 
+	public List<ProveedorSupermercado> darProveedoresSuperPorSuper (PersistenceManager pm, long pID) 
 	{
-		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaProveedores() + " WHERE nombre = ?");
-		q.setResultClass(Proveedor.class);
-		q.setParameters(nombreProveedor);
-		return (List<Proveedor>) q.executeList();
-	}**/
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaProveedorSupermercado() + " WHERE id_supermercado = ?");
+		q.setResultClass(ProveedorSupermercado.class);
+		q.setParameters(pID);
+		return (List<ProveedorSupermercado>) q.executeList();
+	}
 	
-	public long eliminarProveedorPorId (PersistenceManager pm, long idProveedor)
+	public long eliminarProveedorSupermercado (PersistenceManager pm, long idProveedor, long idSuper)
 	{
-        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaProveedores() + " WHERE id = ?");
-        q.setParameters(idProveedor);
+        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaProveedores() + " WHERE id_proveedor = ? AND id_supermercado = ?");
+        q.setParameters(idProveedor,idSuper);
         return (long) q.executeUnique();            
 	}
 
