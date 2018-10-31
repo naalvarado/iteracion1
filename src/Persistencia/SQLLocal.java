@@ -1,8 +1,11 @@
 package Persistencia;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import Negocio.Bodega;
 import Negocio.LocalVenta;
 
 public class SQLLocal {
@@ -22,11 +25,34 @@ public class SQLLocal {
 		return (long) q.executeUnique();
 	}
 	
-	public LocalVenta darLocalPorNombre(PersistenceManager pm, String pDireccion) {
+	public LocalVenta darLocalPorId (PersistenceManager pm, long idLocal) 
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaLocal() + " WHERE id = ?");
+		q.setResultClass(LocalVenta.class);
+		q.setParameters(idLocal);
+		return (LocalVenta) q.executeUnique();
+	}
+	
+	public LocalVenta darLocalPorDireccion(PersistenceManager pm, String pDireccion) {
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaLocal() + " WHERE direccion = ?");
 		q.setResultClass(LocalVenta.class);
 		q.setParameters(pDireccion);
 		return (LocalVenta) q.executeUnique();
+	}
+	
+	public List<LocalVenta> darLocalesPorIdSucursal (PersistenceManager pm, long idSuc) 
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaLocal() + " WHERE id_sucursal = ?");
+		q.setResultClass(LocalVenta.class);
+		q.setParameters(idSuc);
+		return (List<LocalVenta>) q.executeList();
+	}
+	
+	public long eliminarLocalPorId (PersistenceManager pm, long idLocal)
+	{
+        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaLocal() + " WHERE id = ?");
+        q.setParameters(idLocal);
+        return (long) q.executeUnique();            
 	}
 
 }

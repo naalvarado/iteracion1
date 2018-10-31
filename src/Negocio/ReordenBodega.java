@@ -8,15 +8,13 @@ public class ReordenBodega {
 	private int nivelReorden;
 	
 	private Bodega bodega;
-	private ArrayList<Perecedero> productosP;
-	private ArrayList<NoPerecedero> productosNoP;
+	private ArrayList<Producto> productos;
 	
-	// Constructor para un producto perecedero
 	public ReordenBodega(Long pID, int pNivelR, Bodega pBodega) {
 		this.ID_Producto = pID;
 		this.nivelReorden  = pNivelR;
 		this.bodega = pBodega;
-		this.productosP = new ArrayList<>(); 
+		this.productos = new ArrayList<>(); 
 	}
 	
 	public Long getIdProducto() {
@@ -28,12 +26,7 @@ public class ReordenBodega {
 	}
 	
 	public int getCantidadProductos() {
-		if(productosP == null) {
-			return productosNoP.size();
-		}
-		else {
-			return productosP.size();
-		}
+		return productos.size();
 	}
 	
 	public void setIdProducto(Long pID) {
@@ -44,42 +37,18 @@ public class ReordenBodega {
 		this.nivelReorden = pNivel;
 	}
 	
-	public void addPerecedero(Perecedero pProducto) {
-		if(productosP != null) {
-			productosP.add(pProducto);
-		}
+	public void addProducto(Producto pProducto) {
+		productos.add(pProducto);
 	}
 	
-	public void addNoPerecedero(NoPerecedero pProducto) {
-		if(productosNoP != null) {
-			productosNoP.add(pProducto);
-		}
-	}
-	
-	public void removePerecedero(Perecedero pPro) {
-		if(productosP != null) {
-			productosP.remove(pPro);
-		}
-		checkReorden();
-	}
-	
-	public void removeNoPerecedero(NoPerecedero pPro) {
-		if(productosNoP != null) {
-			productosNoP.remove(pPro);
-		}
+	public void removeProducto(Producto pPro) {
+		productos.remove(pPro);
 		checkReorden();
 	}
 	
 	private void checkReorden() {
-		if(productosP != null) {
-			if(productosP.size() <= nivelReorden) {
-				// TODO llamar metodo en bodega
-			}
-		}
-		else {
-			if(productosNoP.size() <= nivelReorden) {
-				// TODO
-			}
+		if(productos.size() <= nivelReorden) {
+			// TODO llamar metodo en bodega
 		}
 	}
 

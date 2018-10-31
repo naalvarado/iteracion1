@@ -9,23 +9,20 @@ public class LocalVenta {
 	
 	private Sucursal sucursal;
 	private ArrayList<Venta> ventas;
-	private ArrayList<EstantePerecedero> estantesPerecedero;
-	private ArrayList<EstanteNoPerecedero> estantesNoPerecederos;
+	private ArrayList<Estante> estantes;
 	
 	public LocalVenta(String pDireccion, Sucursal pSucursal){
 		this.direccion = pDireccion;
 		this.sucursal = pSucursal;
 		ventas = new ArrayList<>();
-		estantesPerecedero = new ArrayList<>();
-		estantesNoPerecederos = new ArrayList<>();
+		estantes = new ArrayList<>();
 	}
 	
 	public LocalVenta(long pID, String pDireccion) {
 		this.id = pID;
 		this.direccion = pDireccion;
 		ventas = new ArrayList<>();
-		estantesPerecedero = new ArrayList<>();
-		estantesNoPerecederos = new ArrayList<>();
+		estantes = new ArrayList<>();
 	}
 	
 	public long getID() {
@@ -44,12 +41,8 @@ public class LocalVenta {
 		return ventas;
 	}
 	
-	public ArrayList<EstantePerecedero> getEstantesP(){
-		return estantesPerecedero;
-	}
-	
-	public ArrayList<EstanteNoPerecedero> getEstantesNoP(){
-		return estantesNoPerecederos;
+	public ArrayList<Estante> getEstantes(){
+		return estantes;
 	}
 	
 	public void setDireccion(String pDir){
@@ -60,21 +53,17 @@ public class LocalVenta {
 		this.sucursal = su;
 	}
 	
-	public void setEstantesP(ArrayList<EstantePerecedero> pEstP){
-		this.estantesPerecedero = pEstP;
-	}
-	
-	public void setEstantesNoP(ArrayList<EstanteNoPerecedero> pEstNoP){
-		this.estantesNoPerecederos = pEstNoP;
+	public void setEstantesP(ArrayList<Estante> pEst){
+		this.estantes = pEst;
 	}
 	
 	private Producto searchProducto(Producto p){
-		//TODO
+		//TODO this
 		return null;
 	}
 	
 	public void vender(Producto p, int c){
-		//TODO 
+		//TODO this
 	}
 
 }

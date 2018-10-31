@@ -24,18 +24,8 @@ public class Controller {
 	}
 	
 	public static void adicionarProductoP(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,
-			int volumen, Timestamp fecha, int calificacion) {
-		manager.adicionarPerecedero(nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, fecha, calificacion);
-	}
-	
-	public static void adicionarProductoNoP(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,
-			int volumen, int calificacion) {
-		manager.adicionarNoPerecedero(nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion);
-	}
-	
-	public static void adicionarProductoA(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,
-			int volumen, int calificacion) {
-		manager.adicionarAbarrote(nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion);
+			int volumen, int calificacion, Timestamp fecha, double precioU, String tipo, String subTipo) {
+		manager.adicionarProducto(nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion, fecha, precioU, tipo, subTipo);
 	}
 	
 	public static void adicionarSucursal(String nombre,  String ciudad, String direccion) {

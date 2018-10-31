@@ -131,7 +131,7 @@ public class Consumidor {
 	}
 	
 	public void comprar(LocalVenta pLV, Producto pProducto, int cantidad){
-		//TODO 
+		//TODO this
 	}
 
 	public long getID() {

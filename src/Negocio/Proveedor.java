@@ -9,18 +9,14 @@ public class Proveedor {
 	
 	private ArrayList<SuperMercado> supermercados;
 	private ArrayList<Pedido> pedidos;
-	private ArrayList<Perecedero> productosPerecederos;
-	private ArrayList<NoPerecedero> productosNoPerecederos;
-	private ArrayList<Abarrote> abarrotes;
+	private ArrayList<Producto> productos;
 	
 	public Proveedor(int pNIT, String pnombre) {
 		this.NIT = pNIT;
 		this.nombre = pnombre;
 		this.supermercados = new ArrayList<>();
 		this.pedidos = new ArrayList<>();
-		this.productosPerecederos = new ArrayList<>();
-		this.productosNoPerecederos = new ArrayList<>();
-		this.abarrotes = new ArrayList<>();
+		this.productos = new ArrayList<>();
 	}
 	
 	public int datNIT() {
@@ -39,16 +35,8 @@ public class Proveedor {
 		return pedidos;
 	}
 	
-	public ArrayList<Perecedero> getProductPerece(){
-		return productosPerecederos;
-	}
-	
-	public ArrayList<NoPerecedero> getProducNoPerece(){
-		return productosNoPerecederos;
-	}
-	
-	public ArrayList<Abarrote> getAbarrotes(){
-		return abarrotes;
+	public ArrayList<Producto> getProductos(){
+		return productos;
 	}
 	
 	public void setNIT(int pNIT) {

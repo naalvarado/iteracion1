@@ -79,22 +79,10 @@ public class SuperAndes {
         return cliente;
 	}
 	
-	public Perecedero adicionarPerecedero(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,
-			int volumen, Timestamp fecha, int calificacion) {
-		Perecedero per = pp.adicionarProductoP(nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, fecha, calificacion);
-		return per;
-	}
-	
-	public NoPerecedero adicionarNoPerecedero(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,
-			int volumen, int calificacion) {
-		NoPerecedero nper = pp.adicionarProductoNoP(nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion);
-		return nper;
-	}
-	
-	public Abarrote adicionarAbarrote(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,
-			int volumen, int calificacion) {
-		Abarrote abar = pp.adicionarProductoA(nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion);
-		return abar;
+	public Producto adicionarProducto(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion, int volumen, 
+			int calificacion, Timestamp fecha, double precioU, String tipo, String subTipo) {
+		Producto pro = pp.adicionarProducto(nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion, fecha, precioU, tipo, subTipo);
+		return pro;
 	}
 	
 	public Sucursal adicionarSucursal(String nombre,  String ciudad, String direccion) {
@@ -111,14 +99,9 @@ public class SuperAndes {
 		return lv;
 	}
 	
-	public EstantePerecedero adicionarEstanteP(String direccionLocal, int volumen, int maxPeso) {
-		EstantePerecedero ep = pp.agregarEstanteP(direccionLocal, volumen, maxPeso);
-		return ep;
-	}
-	
-	public EstanteNoPerecedero adicionarEstanteNoP(String direccionLocal, int volumen, int maxPeso) {
-		EstanteNoPerecedero ep = pp.agregarEstanteNoP(direccionLocal, volumen, maxPeso);
-		return ep;
+	public Estante adicionarEstante(String direccionLocal, int volumen, int maxPeso) {
+		Estante e = pp.agregarEstante(direccionLocal, volumen, maxPeso);
+		return e;
 	}
 	
 	/**

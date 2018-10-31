@@ -7,25 +7,14 @@ public class ReordenEstante {
 	private Long ID_Producto;
 	private int nivelReorden;
 	
-	private EstantePerecedero estanteP;
-	private EstanteNoPerecedero estanteNoP;
-	private ArrayList<Perecedero> productosP;
-	private ArrayList<NoPerecedero> productosNoP;
+	private Estante estante;
+	private ArrayList<Producto> productos;
 	
-	public ReordenEstante(Long pID, int pNivelR, EstantePerecedero pEstante) {
+	public ReordenEstante(Long pID, int pNivelR, Estante pEstante) {
 		this.ID_Producto = pID;
 		this.nivelReorden =  pNivelR;
-		this.estanteP = pEstante;
-		this.productosP = new ArrayList<>();
-		this.productosNoP = null;
-	}
-	
-	public ReordenEstante(Long pID, int pNivelR, EstanteNoPerecedero pEstante) {
-		this.ID_Producto = pID;
-		this.nivelReorden = pNivelR;
-		this.estanteNoP = pEstante;
-		this.productosNoP = new ArrayList<>();
-		this.productosP = null;
+		this.estante = pEstante;
+		this.productos = new ArrayList<>();
 	}
 	
 	public Long getIdProducto() {
@@ -37,12 +26,7 @@ public class ReordenEstante {
 	}
 	
 	public int getCantidadProductos() {
-		if(productosP == null) {
-			return productosNoP.size();
-		}
-		else {
-			return productosP.size();
-		}
+		return productos.size();
 	}
 	
 	public void setIdProducto(Long pID) {
@@ -53,42 +37,18 @@ public class ReordenEstante {
 		this.nivelReorden = pNivel;
 	}
 	
-	public void addPerecedero(Perecedero pProducto) {
-		if(productosP != null) {
-			productosP.add(pProducto);
-		}
+	public void addProducto(Producto pProducto) {
+		productos.add(pProducto);
 	}
 	
-	public void addNoPerecedero(NoPerecedero pProducto) {
-		if(productosNoP != null) {
-			productosNoP.add(pProducto);
-		}
-	}
-	
-	public void removePerecedero(Perecedero pPro) {
-		if(productosP != null) {
-			productosP.remove(pPro);
-		}
-		checkReorden();
-	}
-	
-	public void removeNoPerecedero(NoPerecedero pPro) {
-		if(productosNoP != null) {
-			productosNoP.remove(pPro);
-		}
+	public void removeProducto(Producto pPro) {
+		productos.remove(pPro);
 		checkReorden();
 	}
 	
 	private void checkReorden() {
-		if(productosP != null) {
-			if(productosP.size() <= nivelReorden) {
-				// TODO llamar metodo en estante
-			}
-		}
-		else {
-			if(productosNoP.size() <= nivelReorden) {
-				// TODO
-			}
+		if(productos.size() <= nivelReorden) {
+			// TODO llamar metodo en estante
 		}
 	}
 

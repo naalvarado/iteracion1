@@ -1,5 +1,5 @@
 package Negocio;
 
-public interface Estante {
-
+public class Estante {
+	//TODO all
 }

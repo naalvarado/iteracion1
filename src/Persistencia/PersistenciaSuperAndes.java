@@ -8,22 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import Negocio.Abarrote;
-import Negocio.Consumidor;
-import Negocio.EstanteNoPerecedero;
-import Negocio.EstantePerecedero;
-import Negocio.LocalVenta;
-import Negocio.NoPerecedero;
-import Negocio.Pedido;
-import Negocio.Perecedero;
-import Negocio.Promocion;
-import Negocio.PromocionDescuento;
-import Negocio.PromocionPlus;
-import Negocio.PromocionPlusDescuento;
-import Negocio.PromocionPlusPeso;
-import Negocio.Sucursal;
-import Negocio.SuperMercado;
-import Negocio.Venta;
+import Negocio.*;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -557,65 +542,18 @@ public class PersistenciaSuperAndes {
         }
 	}
 	
-	public Perecedero adicionarProductoP(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,
-			int volumen, Timestamp fecha, int calificacion) {
+	public Producto adicionarProducto(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,
+			int volumen, int calificacion, Timestamp fecha, double precioU, String tipo, String subTipo) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx =  pm.currentTransaction();
 		try {
 			tx.begin();
 			long idProduc = nextval();
-			long tuplasInsertadas = sqlProducto.adicionarProductoP(pm, idProduc, nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, fecha, calificacion);
+			long tuplasInsertadas = sqlProducto.adicionarProducto(pm, idProduc, nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion, fecha, precioU, tipo, subTipo);
 			tx.commit();
 			
-			return new Perecedero(idProduc, nombre);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		finally {
-			if(tx.isActive()) {
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-	
-	public NoPerecedero adicionarProductoNoP(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,
-			int volumen, int calificacion) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx =  pm.currentTransaction();
-		try {
-			tx.begin();
-			long idProduc = nextval();
-			long tuplasInsertadas = sqlProducto.adicionarProductoNoP(pm, idProduc, nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion);
-			tx.commit();
-			
-			return new NoPerecedero(idProduc, nombre);
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		finally {
-			if(tx.isActive()) {
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-	
-	public Abarrote adicionarProductoA(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,
-			int volumen, int calificacion) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx =  pm.currentTransaction();
-		try {
-			tx.begin();
-			long idProduc = nextval();
-			long tuplasInsertadas = sqlProducto.adicionarProductoA(pm, idProduc, nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion);
-			tx.commit();
-			
-			return new Abarrote(idProduc, nombre);
+			return new Producto();
+			// TODO retornar un producto completo
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -676,10 +614,10 @@ public class PersistenciaSuperAndes {
 	}
 	
 	public LocalVenta darLocalPorDireccion(String pDireccion) {
-		return sqlLocal.darLocalPorNombre(pmf.getPersistenceManager(), pDireccion);
+		return sqlLocal.darLocalPorDireccion(pmf.getPersistenceManager(), pDireccion);
 	}
 	
-	public EstantePerecedero agregarEstanteP(String direccionLocal, int volumen, int maxPeso) {
+	public Estante agregarEstante(String direccionLocal, int volumen, int maxPeso) {
 		PersistenceManager pm = pmf.getPersistenceManager();
 		Transaction tx = pm.currentTransaction();
 		try {
@@ -690,32 +628,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlEstante.adicionarEstante(pm, idEstante, idLocal, volumen, maxPeso);
 			tx.commit();
 			
-			return new EstantePerecedero();
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		finally {
-			if(tx.isActive()) {
-				tx.rollback();
-			}
-			pm.close();
-		}
-	}
-	
-	public EstanteNoPerecedero agregarEstanteNoP(String direccionLocal, int volumen, int maxPeso) {
-		PersistenceManager pm = pmf.getPersistenceManager();
-		Transaction tx = pm.currentTransaction();
-		try {
-			tx.begin();
-			long  idEstante = nextval();
-			LocalVenta lv = darLocalPorDireccion(direccionLocal);
-			long idLocal = lv.getID();
-			long tuplasInsertadas = sqlEstante.adicionarEstante(pm, idEstante, idLocal, volumen, maxPeso);
-			tx.commit();
-			
-			return new EstanteNoPerecedero();
+			return new Estante();
 		}
 		catch(Exception e) {
 			e.printStackTrace();
