@@ -31,13 +31,13 @@ public class Controller {
 	public static void adicionarSucursal(String nombre,  String ciudad, String direccion) {
 		manager.adicionarSucursal(nombre, ciudad, direccion);
 	}
-	public static void adicionarVentas(Date pFecha, String formaPago, Integer valotTotal, Integer consumidor)
+	public static void adicionarVentas(Date pFecha, long idProducto, long idLocal)
 	{
-		manager.adicionarVenta(pFecha, formaPago, valotTotal, consumidor);
+		manager.adicionarVenta(pFecha, idProducto,  idLocal);
 	}
-	public static void adicionarPromocion(String nombre, String descripcion, Integer tipo, Date fechaIni, Date fechaFinal, Integer estado,Integer decuent,Integer cvendidas, Integer cpagadas)
+	public static void adicionarPromocion(String descripcion, String nombre, String tipo, Timestamp fechaIni, Timestamp fechaFinal,double cvendidas, double cpagadas,double decuent)
 	{
-		manager.adicionarPromocion(nombre, descripcion, tipo, fechaIni, fechaFinal, estado, decuent, cvendidas, cpagadas);
+		manager.adicionarPromocion(nombre, descripcion, tipo, fechaIni, fechaFinal, decuent, cvendidas, cpagadas);
 	}
 	public static void registrarPedido(String nombreP, long idProveedor, Integer cat, boolean estado)
 	{

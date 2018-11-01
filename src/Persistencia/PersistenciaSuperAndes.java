@@ -64,13 +64,9 @@ public class PersistenciaSuperAndes {
     private SQLProducto sqlProducto;
     private SQLSucursal sqlSucursal;
     private SQLVentas sqlVentas;
-    private SQLPromocionDescuento sqlDescuento;
     private SQLPromocion sqlPromocion;
-    private SQLPromocionPlus sqlPromocionPlus;
     private SQLLocal sqlLocal;
     private SQLEstante sqlEstante;
-    private SQLPromocionPlusPeso sqlPromocionPlusPeso;
-    private SQLPromocionPlusDescuento sqlPromocionPlusDescuento;
     private SQLPedidos sqlPedidos;
     
 	/**
@@ -92,32 +88,22 @@ public class PersistenciaSuperAndes {
 		//3
 		tablas.add ("Producto");
 		//4
-		tablas.add("Promocion");
+		tablas.add("Promociones");
 		//5
-		tablas.add("PromosionDescuento");
-		//6
-		tablas.add("PromocionPlus");
-		//7
-		tablas.add("PromcionPlusDescuento");
-		//8
-		tablas.add("PromocionPlusPeso");
-		//9
-		tablas.add("PromocionProducto");
-		//10
 		tablas.add ("Sucursal");
-		//11
+		//6
 		tablas.add("Venta");
-		//12
+		//7
 		tablas.add("Pedidos");
-		//13
+		//8
 		tablas.add("Local");
-		//14
+		//9
 		tablas.add("Estante");
-		//15
+		//10
 		tablas.add("Proveedores");
-		//16
+		//11
 		tablas.add("ProveedorSupermercado");
-		//17
+		//12
 		tablas.add("Bodegas");
 }
 	/**
@@ -165,47 +151,21 @@ public class PersistenciaSuperAndes {
 		return tablas.get(4);
 	}
 	
-	public String darTablaPromocionDescuento()
-	{
-		return tablas.get(5);
-	}
-	
-	public String darTablaPromocionPlus()
-	{
-		return tablas.get(6);
-	}
-	
-	public String darTablaPromocionPlusDescuento()
+	public String darTablaPedidos()
 	{
 		return tablas.get(7);
 	}
 	
-	
-	public String darTablaPromocionPlusPeso()
-	{
-		return tablas.get(8);
-	}
-	
-	
-	public String darTablaPromocionProducto()
-	{
-		return tablas.get(9);
-	}
-	public String darTablaPedidos()
-	{
-		return tablas.get(12);
-	}
-	
 	public String darTablaProveedores() {
-		return tablas.get(15);
+		return tablas.get(10);
 	}
 	
 	public String darTablaProveedorSupermercado() {
-		return tablas.get(16);
+		return tablas.get(11);
 	}
 	
 	public String darTablaBodegas() {
-		return tablas.get(17);
+		return tablas.get(12);
 	}
 	/**
 	 * Constructor que toma los nombres de las tablas de la base de datos del objeto tableConfig
@@ -257,9 +217,6 @@ public class PersistenciaSuperAndes {
 		sqlUtil = new SQLUtil(this);
 		sqlConsumidor = new SQLConsumidor(this);
 		sqlVentas = new SQLVentas(this);
-		sqlDescuento = new SQLPromocionDescuento(this);
-		sqlPromocionPlusPeso = new SQLPromocionPlusPeso(this);
-		sqlPromocionPlusDescuento = new SQLPromocionPlusDescuento(this);
 		sqlPedidos = new SQLPedidos(this);
 		
 	}
@@ -293,16 +250,16 @@ public class PersistenciaSuperAndes {
 		return tablas.get(3);
 	}
 	public String darTablaSucursal() {
-		return tablas.get(10);
+		return tablas.get(5);
 	}
 	public String darTablaVentas(){
-		return tablas.get(11);
+		return tablas.get(6);
 	}
 	public String darTablaLocal() {
-		return tablas.get(13);
+		return tablas.get(8);
 	}
 	public String darTablaEstante() {
-		return tablas.get(14);
+		return tablas.get(9);
 	}
 	
 	/**
@@ -362,7 +319,7 @@ public class PersistenciaSuperAndes {
             pm.close();
         }
 	}
-	public Venta adicionarVentas( Date pFecha, String formaPago, Integer valotTotal, Integer consumidor) 
+	public Venta adicionarVentas( Date pFecha, long idProducto, long idLocal) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -372,12 +329,12 @@ public class PersistenciaSuperAndes {
             System.out.println("idSuper");
             long idSuper = nextval ();
             System.out.println("LanzaraException");
-            long tuplasInsertadas = sqlVentas.adicionarVentas(pm, idSuper,   pFecha,  formaPago,  valotTotal,  consumidor);
+            long tuplasInsertadas = sqlVentas.adicionarVentas(pm, idSuper,   pFecha,  idProducto,  idLocal);
             tx.commit();
 
-            log.trace ("Inserci�n de Bar: " + consumidor + ": " + tuplasInsertadas + " tuplas insertadas");
+            log.trace ("Inserci�n de Bar: " + tuplasInsertadas + " tuplas insertadas");
 
-            return new Venta (idSuper,  pFecha,  formaPago,  valotTotal,  consumidor);
+            return new Venta (idSuper,  pFecha,  idProducto,  idLocal);
         }
         catch (Exception e)
         {
@@ -462,63 +419,18 @@ public class PersistenciaSuperAndes {
             pm.close();
         }
 	}
-	public Promocion adicionarPromocion(String nombre, String descripcion, Integer tipo, Date fechaIni, Date fechaFinal, Integer estado,Integer decuent,Integer cvendidas, Integer cpagadas)
+	public Promocion adicionarPromocion(String nombre, String descripcion, String tipo, Timestamp fechaIni, Timestamp fechaFinal, double decuent, double cvendidas, double cpagadas)
 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
         try
         {
-        	if(tipo == 1)
-        	{
-        		 tx.begin();
-                 System.out.println("idSuper");
-                 long idProm = nextval ();
-                 System.out.println("LanzaraException");
-                 long tuplasInsertadas = sqlPromocionPlus.adicionarPromocionPlus(pm,  idProm,  decuent);
-                 long tuplasInsertadas2 = sqlPromocion.adicionarPromocion(pm,  idProm,  nombre,  descripcion, tipo, fechaIni,  fechaFinal,  estado);
-                 tx.commit();
-                 return new PromocionPlus ( idProm,  nombre,  descripcion,  fechaIni,  fechaFinal);
-        	}
-        	if(tipo == 2)
-        	{
-        		 tx.begin();
-                 System.out.println("idSuper");
-                 long idProm = nextval ();
-                 System.out.println("LanzaraException");
-                 long tuplasInsertadas = sqlPromocionPlusPeso.adicionarPromocionPlusPeso(pm,  idProm,  cvendidas,cpagadas);
-                 long tuplasInsertadas2 = sqlPromocion.adicionarPromocion(pm,  idProm,  nombre,  descripcion, tipo, fechaIni,  fechaFinal,  estado);
-                 tx.commit();
-                 return new PromocionPlusPeso ( idProm, nombre,  descripcion,  fechaIni,  fechaFinal);
-        	}
-        	if(tipo == 3)
-        	{
-       		 tx.begin();
-             System.out.println("idSuper");
-             long idProm = nextval ();
-             System.out.println("LanzaraException");
-             long tuplasInsertadas = sqlPromocionPlusDescuento.adicionarPromocionPlusDescuento(pm, idProm, decuent,cvendidas);
-             long tuplasInsertadas2 = sqlPromocion.adicionarPromocion(pm,  idProm,  nombre,  descripcion, tipo, fechaIni,  fechaFinal,  estado);
-             tx.commit();
-             return new PromocionPlusDescuento ( idProm, nombre,  descripcion,  fechaIni,  fechaFinal, decuent);
-        		
-        	}
-        	if(tipo == 4)
-        	{
-          		 tx.begin();
-                 System.out.println("idSuper");
-                 long idProm = nextval ();
-                 System.out.println("LanzaraException");
-                 long tuplasInsertadas = sqlDescuento.adicionarPromocionDescuento(pm, idProm, decuent);
-                 long tuplasInsertadas2 = sqlPromocion.adicionarPromocion(pm,  idProm,  nombre,  descripcion, tipo, fechaIni,  fechaFinal,  estado);
-                 tx.commit();
-                 return new PromocionDescuento ( idProm, nombre,  descripcion,  fechaIni,  fechaFinal, decuent);
-        	}
             tx.begin();
             System.out.println("idSuper");
             long idProm = nextval ();
             System.out.println("LanzaraException");
-            long tuplasInsertadas = sqlPromocion.adicionarPromocion(pm,  idProm,  nombre,  descripcion, tipo, fechaIni,  fechaFinal,  estado);
+            long tuplasInsertadas = sqlPromocion.adicionarPromocion(pm,  idProm, descripcion, nombre, tipo, fechaIni,  fechaFinal,  cvendidas, cpagadas, decuent);
             tx.commit();
 
             log.trace ("Inserci�n de Bar: " + nombre + ": " + tuplasInsertadas + " tuplas insertadas");

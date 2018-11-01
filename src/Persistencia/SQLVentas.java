@@ -16,7 +16,7 @@ public class SQLVentas {
 	 *****************************************************************/
 	/**
 	 * Cadena que representa el tipo de consulta que se va a realizar en las sentencias de acceso a la base de datos
-	 * Se renombra acá para facilitar la escritura de las sentencias
+	 * Se renombra acï¿½ para facilitar la escritura de las sentencias
 	 */
 	private final static String SQL = PersistenciaSuperAndes.SQL;
 
@@ -24,13 +24,13 @@ public class SQLVentas {
 	 * 			Atributos
 	 *****************************************************************/
 	/**
-	 * El manejador de persistencia general de la aplicación
+	 * El manejador de persistencia general de la aplicaciï¿½n
 	 */
 	private PersistenciaSuperAndes pp;
 	
 	/**
 	 * Constructor
-	 * @param pp - El Manejador de persistencia de la aplicación
+	 * @param pp - El Manejador de persistencia de la aplicaciï¿½n
 	 */
 	public SQLVentas(PersistenciaSuperAndes pp)
 	{
@@ -43,15 +43,15 @@ public class SQLVentas {
 	 * @param nombre
 	 * @return
 	 */
-	public long adicionarVentas (PersistenceManager pm, long pID, Date pFecha, String formaPago, Integer valotTotal, Integer consumidor) 
+	public long adicionarVentas (PersistenceManager pm, long pID, Date pFecha, long idProducto, long idLocal) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaVentas() + "(id, fecha,formapago,valortotal,consumido) values (?,?,?,?,?)");
-        q.setParameters(pID,pFecha, formaPago,  valotTotal, consumidor);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaVentas() + "(id, fecha, idProducto, local) values (?,?,?,?)");
+        q.setParameters(pID,pFecha, idProducto, idLocal);
         return (long) q.executeUnique();
 	}
 
 	/**
-	 * Crea y ejecuta la sentencia SQL para encontrar la información de LOS BARES de la 
+	 * Crea y ejecuta la sentencia SQL para encontrar la informaciï¿½n de LOS BARES de la 
 	 * base de datos de Parranderos
 	 * @param pm - El manejador de persistencia
 	 * @return Una lista de objetos BAR

@@ -6,30 +6,19 @@ public class Venta {
 	
 	private long ID_Producto;
 	private Date fecha;
+	private long id;
+	private long local;
 	
-	private LocalVenta local;
-	
-	private String formaPago;
-	
-	private Integer valorTotal;
-	
-    private Integer consumidor;
     
 
 	
-	public Venta(long pID, Date pFecha, LocalVenta pLocal) {
-		this.ID_Producto = pID;
+	public Venta(long pID, Date pFecha, long pProducto, long pLocal) {
+		this.id = pID;
 		this.fecha = pFecha;
+		this.ID_Producto = pProducto;
 		this.local = pLocal;
 	}
-	public Venta(long pID, Date pFecha, String formaPago, Integer valotTotal, Integer consumidor)
-	{
-		this.ID_Producto = pID;
-		this.fecha = pFecha;
-		this.setFormaPago(formaPago);
-		this.setValorTotal(valotTotal);
-		this.setConsumidor(consumidor);
-	}
+
 	public Long getIdProducto() {
 		return ID_Producto;
 	}
@@ -38,8 +27,12 @@ public class Venta {
 		return fecha;
 	}
 	
-	public LocalVenta getLocal() {
+	public long getLocal() {
 		return local;
+	}
+	
+	public long getId() {
+		return id;
 	}
 	
 	public void setProducto(Long ID) {
@@ -53,24 +46,6 @@ public class Venta {
 	public String toString() {
 		String re = "Producto: "+ID_Producto+" Fecha: "+fecha;
 		return re;
-	}
-	public String getFormaPago() {
-		return formaPago;
-	}
-	public void setFormaPago(String formaPago) {
-		this.formaPago = formaPago;
-	}
-	public Integer getValorTotal() {
-		return valorTotal;
-	}
-	public void setValorTotal(Integer valorTotal) {
-		this.valorTotal = valorTotal;
-	}
-	public Integer getConsumidor() {
-		return consumidor;
-	}
-	public void setConsumidor(Integer consumidor) {
-		this.consumidor = consumidor;
 	}
 
 }

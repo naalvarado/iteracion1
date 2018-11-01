@@ -89,8 +89,8 @@ public class SuperAndes {
 		Sucursal suc = pp.adicionarSucursal(nombre, ciudad, direccion);
 		return suc;
 	}
-	public Promocion adicionarPromocion(String nombre, String descripcion, Integer tipo, Date fechaIni, Date fechaFinal, Integer estado,Integer decuent,Integer cvendidas, Integer cpagadas) {
-		Promocion prom = pp.adicionarPromocion(nombre, descripcion, tipo, fechaIni, fechaFinal, estado, decuent, cvendidas, cpagadas);
+	public Promocion adicionarPromocion(String descripcion, String nombre, String tipo, Timestamp fechaIni, Timestamp fechaFinal, double decuent,double cvendidas, double cpagadas) {
+		Promocion prom = pp.adicionarPromocion(descripcion, nombre, tipo, fechaIni, fechaFinal, cvendidas, cpagadas, decuent);
 		return prom;
 	}
 	
@@ -116,8 +116,8 @@ public class SuperAndes {
         log.info ("Listando Bares: " + bares.size() + " bares existentes");
         return bares;
 	}
-	public Venta adicionarVenta(Date pFecha, String formaPago, Integer valotTotal, Integer consumidor) {
-		Venta venta = pp.adicionarVentas(pFecha, formaPago,  valotTotal,  consumidor);
+	public Venta adicionarVenta(Date pFecha, long idProducto, long idLocal) {
+		Venta venta = pp.adicionarVentas(pFecha, idProducto,  idLocal);
 		return venta;
 	}
 	public Pedido registrarPedidoProducto(String nombreP,long idProveedor,Integer cat,boolean estado)

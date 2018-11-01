@@ -47,8 +47,8 @@ public class SQLConsumidor {
 	public long adicionarConsumidor (PersistenceManager pm, long id,int pDoc, String pNombre, String pEmail, String pDireccion) 
 	{
 		
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaConsumidor() + "(id, documento,nombre,email,direccion) values (?, ?, ?, ?, ?)");
-        q.setParameters(id,pDoc, pNombre, pEmail,pDireccion);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaConsumidor() + "(id, documento,nombre,email,direccion) values (?, ?, ?, ?, ?, ?)");
+        q.setParameters(id,pDoc, pNombre, pEmail,pDireccion, 0);
         return (long) q.executeUnique();
         
 	}
