@@ -105,6 +105,8 @@ public class PersistenciaSuperAndes {
 		tablas.add("ProveedorSupermercado");
 		//12
 		tablas.add("Bodegas");
+		//13
+		tablas.add("NivelesReordenBodegas");
 }
 	/**
 	 * Constructor privado, que recibe los nombres de las tablas en un objeto Json - Patr�n SINGLETON
@@ -166,6 +168,10 @@ public class PersistenciaSuperAndes {
 	
 	public String darTablaBodegas() {
 		return tablas.get(12);
+	}
+	
+	public String darTablaReordenBodega() {
+		return tablas.get(13);
 	}
 	/**
 	 * Constructor que toma los nombres de las tablas de la base de datos del objeto tableConfig

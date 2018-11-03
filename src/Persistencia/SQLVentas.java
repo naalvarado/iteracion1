@@ -6,6 +6,7 @@ import java.util.List;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 
+import Negocio.Producto;
 import Negocio.SuperMercado;
 import Negocio.Venta;
 
@@ -49,6 +50,14 @@ public class SQLVentas {
         q.setParameters(pID,pFecha, idProducto, idLocal);
         return (long) q.executeUnique();
 	}
+	
+	public Venta darVentaId (PersistenceManager pm, long idVenta) 
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaVentas() + " WHERE id = ?");
+		q.setResultClass(Venta.class);
+		q.setParameters(idVenta);
+		return (Venta) q.executeUnique();
+	}
 
 	/**
 	 * Crea y ejecuta la sentencia SQL para encontrar la informaci�n de LOS BARES de la 
@@ -61,5 +70,12 @@ public class SQLVentas {
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaVentas());
 		q.setResultClass(SuperMercado.class);
 		return (List<Venta>) q.executeList();
+	}
+	
+	public long eliminarVentaPorId (PersistenceManager pm, long idVenta)
+	{
+        Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaVentas() + " WHERE id = ?");
+        q.setParameters(idVenta);
+        return (long) q.executeUnique();            
 	}
 }
