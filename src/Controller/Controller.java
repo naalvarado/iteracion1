@@ -18,9 +18,14 @@ public class Controller {
 		
 	}
 	
-	public static void adicionarConsumidor(int pDoc, String pNombre, String pEmail, String pDireccion)
+	public static void adicionarConsumidorCedula(int pDoc, String pNombre, String pEmail, String pDireccion)
 	{
-		manager.adicionarConsumidor( pDoc, pNombre, pEmail, pDireccion);
+		manager.adicionarConsumidorCedula( pDoc, pNombre, pEmail, pDireccion);
+	}
+	
+	public static void adicionarConsumidorNIT(int pDoc, String pNombre, String pEmail, String pDireccion)
+	{
+		manager.adicionarConsumidorNIT( pDoc, pNombre, pEmail, pDireccion);
 	}
 	
 	public static void adicionarProductoP(String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion,

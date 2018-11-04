@@ -30,35 +30,13 @@ public class PersistenciaSuperAndes {
 	
 	private static Logger log = Logger.getLogger(PersistenciaSuperAndes.class.getName());
 	
-	/**
-	 * Cadena para indicar el tipo de sentencias que se va a utilizar en una consulta
-	 */
 	public final static String SQL = "javax.jdo.query.SQL";
-	
-	/**
-	 * Atributo privado que es el �nico objeto de la clase - Patr�n SINGLETON
-	 */
 	private static PersistenciaSuperAndes instance;
-	
-	/**
-	 * F�brica de Manejadores de persistencia, para el manejo correcto de las transacciones
-	 */
 	private PersistenceManagerFactory pmf;
 	
-	/**
-	 * Arreglo de cadenas con los nombres de las tablas de la base de datos, en su orden:
-	 * Secuenciador, tipoBebida, bebida, bar, bebedor, gustan, sirven y visitan
-	 */
 	private List <String> tablas;
-	
-	/**
-	 * Atributo para el acceso a las sentencias SQL propias a PersistenciaParranderos
-	 */
 	private SQLUtil sqlUtil;
 	
-	/**
-	 * Atributo para el acceso a las sentencias SQL propias a PersistenciaParranderos
-	 */
 	private SQLSuperMercados sqlSuperMercado;
     private SQLConsumidor sqlConsumidor;
     private SQLProducto sqlProducto;
@@ -68,10 +46,9 @@ public class PersistenciaSuperAndes {
     private SQLLocal sqlLocal;
     private SQLEstante sqlEstante;
     private SQLPedidos sqlPedidos;
+    private SQLCarrito sqlCarrito;
+    private SQLProductosCarrito sqlProductosCarrito;
     
-	/**
-	 * Constructor privado con valores por defecto - Patr�n SINGLETON
-	 */
 	private PersistenciaSuperAndes ()
 	{
 		pmf = JDOHelper.getPersistenceManagerFactory("SuperAndes");		
@@ -107,11 +84,12 @@ public class PersistenciaSuperAndes {
 		tablas.add("Bodegas");
 		//13
 		tablas.add("NivelesReordenBodegas");
-}
-	/**
-	 * Constructor privado, que recibe los nombres de las tablas en un objeto Json - Patr�n SINGLETON
-	 * @param tableConfig - Objeto Json que contiene los nombres de las tablas y de la unidad de persistencia a manejar
-	 */
+		//14
+		tablas.add("CarritosCompras");
+		//15
+		tablas.add("ProductosEnCarritos");
+    }
+
 	private PersistenciaSuperAndes (JsonObject tableConfig)
 	{
 		System.out.println("Entra a percistencia");
@@ -129,9 +107,6 @@ public class PersistenciaSuperAndes {
 	}
 
 	
-	/**
-	 * @return Retorna el �nico objeto PersistenciaParranderos existente - Patr�n SINGLETON
-	 */
 	public static PersistenciaSuperAndes getInstance ()
 	{
 		if (instance == null)
@@ -140,12 +115,34 @@ public class PersistenciaSuperAndes {
 		}
 		return instance;
 	}
-	/**
-	 * @return La cadena de caracteres con el nombre del secuenciador de parranderos
-	 */
+
 	public String darSeqSuperAndes ()
 	{
 		return tablas.get (0);
+	}
+	
+	public String darTablaSuperMercados()
+	{
+		return tablas.get(1);
+	}
+	public String darTablaConsumidor()
+	{
+		return tablas.get(2);
+	}
+	public String darTablaProducto() {
+		return tablas.get(3);
+	}
+	public String darTablaSucursal() {
+		return tablas.get(5);
+	}
+	public String darTablaVentas(){
+		return tablas.get(6);
+	}
+	public String darTablaLocal() {
+		return tablas.get(8);
+	}
+	public String darTablaEstante() {
+		return tablas.get(9);
 	}
 	
 	public String darTablaPromocion()
@@ -173,11 +170,15 @@ public class PersistenciaSuperAndes {
 	public String darTablaReordenBodega() {
 		return tablas.get(13);
 	}
-	/**
-	 * Constructor que toma los nombres de las tablas de la base de datos del objeto tableConfig
-	 * @param tableConfig - El objeto JSON con los nombres de las tablas
-	 * @return Retorna el �nico objeto PersistenciaParranderos existente - Patr�n SINGLETON
-	 */
+	
+	public String darTablaCarrito() {
+		return tablas.get(14);
+	}
+	
+	public String darTablaProductosCarrito() {
+		return tablas.get(15);
+	}
+
 	public static PersistenciaSuperAndes getInstance (JsonObject tableConfig)
 	{
 		System.out.println("Entra instance");
@@ -189,19 +190,12 @@ public class PersistenciaSuperAndes {
 		return instance;
 	}
 	
-	/**
-	 * Cierra la conexi�n con la base de datos
-	 */
 	public void cerrarUnidadPersistencia ()
 	{
 		pmf.close ();
 		instance = null;
 	}
-	/**
-	 * Genera una lista con los nombres de las tablas de la base de datos
-	 * @param tableConfig - El objeto Json con los nombres de las tablas
-	 * @return La lista con los nombres del secuenciador y de las tablas
-	 */
+
 	private List <String> leerNombresTablas (JsonObject tableConfig)
 	{
 		JsonArray nombres = tableConfig.getAsJsonArray("tablas") ;
@@ -214,9 +208,7 @@ public class PersistenciaSuperAndes {
 		
 		return resp;
 	}
-	/**
-	 * Crea los atributos de clases de apoyo SQL
-	 */
+
 	private void crearClasesSQL()
 	{
 		sqlSuperMercado = new SQLSuperMercados(this);
@@ -224,55 +216,10 @@ public class PersistenciaSuperAndes {
 		sqlConsumidor = new SQLConsumidor(this);
 		sqlVentas = new SQLVentas(this);
 		sqlPedidos = new SQLPedidos(this);
-		
+		sqlCarrito = new SQLCarrito(this);
+		sqlProductosCarrito = new SQLProductosCarrito(this);
 	}
 	
-//	/**
-//	 * Crea los atributos de clases de apoyo SQL
-//	 */
-//	private void crearClasesSQL ()
-//	{
-//		sqlTipoBebida = new SQLTipoBebida(this);
-//		sqlBebida = new SQLBebida(this);
-//		sqlBar = new SQLBar(this);
-//		sqlBebedor = new SQLBebedor(this);
-//		sqlGustan = new SQLGustan(this);
-//		sqlSirven = new SQLSirven (this);
-//		sqlVisitan = new SQLVisitan(this);		
-//		sqlUtil = new SQLUtil(this);
-//	}
-	
-
-	
-	public String darTablaSuperMercados()
-	{
-		return tablas.get(1);
-	}
-	public String darTablaConsumidor()
-	{
-		return tablas.get(2);
-	}
-	public String darTablaProducto() {
-		return tablas.get(3);
-	}
-	public String darTablaSucursal() {
-		return tablas.get(5);
-	}
-	public String darTablaVentas(){
-		return tablas.get(6);
-	}
-	public String darTablaLocal() {
-		return tablas.get(8);
-	}
-	public String darTablaEstante() {
-		return tablas.get(9);
-	}
-	
-	/**
-	 * Extrae el mensaje de la exception JDODataStoreException embebido en la Exception e, que da el detalle espec�fico del problema encontrado
-	 * @param e - La excepci�n que ocurrio
-	 * @return El mensaje de la excepci�n JDO
-	 */
 	private String darDetalleException(Exception e) 
 	{
 		String resp = "";
@@ -325,6 +272,7 @@ public class PersistenciaSuperAndes {
             pm.close();
         }
 	}
+	
 	public Venta adicionarVentas( Date pFecha, long idProducto, long idLocal) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -358,6 +306,7 @@ public class PersistenciaSuperAndes {
             pm.close();
         }
 	}
+	
 	public Pedido adicionarPedido( String nombreP, long idProveedor, Integer cat, boolean estado) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -391,7 +340,8 @@ public class PersistenciaSuperAndes {
             pm.close();
         }
 	}
-	public Consumidor adicionarConsumidor(int pDoc, String pNombre, String pEmail, String pDireccion)
+	
+	public Consumidor adicionarConsumidorCedula(int pDoc, String pNombre, String pEmail, String pDireccion)
 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
@@ -402,7 +352,7 @@ public class PersistenciaSuperAndes {
             System.out.println("idSuper");
             long idConsum = nextval ();
             System.out.println("LanzaraException");
-            long tuplasInsertadas = sqlConsumidor.adicionarConsumidor(pm,idConsum,pDoc,  pNombre, pEmail, pDireccion);
+            long tuplasInsertadas = sqlConsumidor.adicionarConsumidorCedula(pm,idConsum,pDoc,  pNombre, pEmail, pDireccion);
             tx.commit();
 
             log.trace ("Inserci�n de Bar: " + pNombre + ": " + tuplasInsertadas + " tuplas insertadas");
@@ -425,6 +375,42 @@ public class PersistenciaSuperAndes {
             pm.close();
         }
 	}
+	
+	public Consumidor adicionarConsumidorNIT(int pDoc, String pNombre, String pEmail, String pDireccion)
+
+	{
+		PersistenceManager pm = pmf.getPersistenceManager();
+        Transaction tx=pm.currentTransaction();
+        try
+        {
+            tx.begin();
+            System.out.println("idSuper");
+            long idConsum = nextval ();
+            System.out.println("LanzaraException");
+            long tuplasInsertadas = sqlConsumidor.adicionarConsumidorNIT(pm,idConsum,pDoc,  pNombre, pEmail, pDireccion);
+            tx.commit();
+
+            log.trace ("Inserci�n de Bar: " + pNombre + ": " + tuplasInsertadas + " tuplas insertadas");
+
+            return new Consumidor (idConsum,pDoc,  pNombre, pEmail, pDireccion);
+        }
+        catch (Exception e)
+        {
+//        	e.printStackTrace();
+        	System.out.println("LanzaException");
+        	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
+        	return null;
+        }
+        finally
+        {
+            if (tx.isActive())
+            {
+                tx.rollback();
+            }
+            pm.close();
+        }
+	}
+	
 	public Promocion adicionarPromocion(String nombre, String descripcion, String tipo, Timestamp fechaIni, Timestamp fechaFinal, double decuent, double cvendidas, double cpagadas)
 
 	{
@@ -557,6 +543,64 @@ public class PersistenciaSuperAndes {
 				tx.rollback();
 			}
 			pm.close();
+		}
+	}
+	
+	public Consumidor darConsumidorPorID(long id) {
+		return sqlConsumidor.darConsumidorPorId(pmf.getPersistenceManager(), id);
+	}
+	
+	public Carrito agregarCarritoConConsumidor(long idConsumidor) {
+		PersistenceManager  pm = pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			long idCarrito = nextval();
+			Consumidor con = darConsumidorPorID(idConsumidor);
+			long idCon = con.getID();
+			long tuplasInsertadas = sqlCarrito.adicionarCarrito(pm, idCarrito);
+			long tuplaCons = sqlCarrito.adicionarConsumidor(pm, idCarrito, idCon);
+			tx.commit();
+			
+			Carrito car = new Carrito(idCarrito);
+			car.setConsumidor(con);
+			return car;
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
+		}
+	}
+	
+	public Carrito darCarrito(long id) {
+		return sqlCarrito.darCarritoId(pmf.getPersistenceManager(), id);
+	}
+	
+	public Producto darProducto(long id) {
+		return sqlProducto.darProductoId(pmf.getPersistenceManager(), id);
+	}
+	
+	public ProductosCarrito agregarProductoACarrito(long idCarrito, long idProducto) {
+		PersistenceManager pm =  pmf.getPersistenceManager();
+		Transaction tx = pm.currentTransaction();
+		try {
+			tx.begin();
+			Carrito car = darCarrito(idCarrito);
+			long idCar = car.getId();
+			Producto pro = darProducto(idProducto);
+			long idPro = 
+		}
+		catch(Exception e){
+			
+		}
+		finally {
+			
 		}
 	}
 	

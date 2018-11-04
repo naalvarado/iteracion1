@@ -71,10 +71,18 @@ public class SuperAndes {
         return mercado;
 	}
 	
-	public Consumidor adicionarConsumidor (int pDoc, String pNombre, String pEmail, String pDireccion)
+	public Consumidor adicionarConsumidorCedula (int pDoc, String pNombre, String pEmail, String pDireccion)
 	{
         log.info ("Adicionando bar: " + pNombre);
-       Consumidor cliente = pp.adicionarConsumidor(pDoc, pNombre, pEmail, pDireccion);
+       Consumidor cliente = pp.adicionarConsumidorCedula(pDoc, pNombre, pEmail, pDireccion);
+        log.info ("Adicionando bar: " + cliente);
+        return cliente;
+	}
+	
+	public Consumidor adicionarConsumidorNIT (int pDoc, String pNombre, String pEmail, String pDireccion)
+	{
+        log.info ("Adicionando bar: " + pNombre);
+       Consumidor cliente = pp.adicionarConsumidorNIT(pDoc, pNombre, pEmail, pDireccion);
         log.info ("Adicionando bar: " + cliente);
         return cliente;
 	}
