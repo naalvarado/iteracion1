@@ -124,13 +124,13 @@ public class SuperAndes {
         log.info ("Listando Bares: " + bares.size() + " bares existentes");
         return bares;
 	}
-	public Venta adicionarVenta(Date pFecha, long idProducto, long idLocal) {
-		Venta venta = pp.adicionarVentas(pFecha, idProducto,  idLocal);
+	public Venta adicionarVenta(Date pFecha, long idProducto, long idLocal, long idConsumidor) {
+		Venta venta = pp.adicionarVentas(pFecha, idProducto,  idLocal, idConsumidor);
 		return venta;
 	}
-	public Pedido registrarPedidoProducto(String nombreP,long idProveedor,Integer cat,boolean estado)
+	public Pedido registrarPedidoProducto(long idProducto, int cat, double precioA, Timestamp fechaEn, char estado, long idSucursal, long idProveedor)
 	{
-		Pedido venta = pp.adicionarPedido(nombreP, idProveedor, cat, estado);
+		Pedido venta = pp.adicionarPedido(idProducto, cat, precioA, fechaEn, estado, idSucursal, idProveedor);
 		return venta;
 	}
 }

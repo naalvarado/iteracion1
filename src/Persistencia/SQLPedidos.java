@@ -1,5 +1,6 @@
 package Persistencia;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class SQLPedidos {
 	 *****************************************************************/
 	/**
 	 * Cadena que representa el tipo de consulta que se va a realizar en las sentencias de acceso a la base de datos
-	 * Se renombra acá para facilitar la escritura de las sentencias
+	 * Se renombra acï¿½ para facilitar la escritura de las sentencias
 	 */
 	private final static String SQL = PersistenciaSuperAndes.SQL;
 
@@ -24,13 +25,13 @@ public class SQLPedidos {
 	 * 			Atributos
 	 *****************************************************************/
 	/**
-	 * El manejador de persistencia general de la aplicación
+	 * El manejador de persistencia general de la aplicaciï¿½n
 	 */
 	private PersistenciaSuperAndes pp;
 	
 	/**
 	 * Constructor
-	 * @param pp - El Manejador de persistencia de la aplicación
+	 * @param pp - El Manejador de persistencia de la aplicaciï¿½n
 	 */
 	public SQLPedidos(PersistenciaSuperAndes pp)
 	{
@@ -43,16 +44,16 @@ public class SQLPedidos {
 	 * @param nombre
 	 * @return
 	 */
-	public long adicionarPedido (PersistenceManager pm, long pID, String nombreP, long idProveedor, Integer cat, boolean estado) 
+	public long adicionarPedido (PersistenceManager pm, long pID, long idProducto, int cat, double precioA, Timestamp fechaEn, char estado, long idSucursal, long idProveedor) 
 	{
 		
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPedidos() + "(id, nombreproducto, idproveedor,cantidad,estado) values (?,?,?,?,?)");
-        q.setParameters(pID, nombreP, idProveedor,cat ,  estado);
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaPedidos() + "(id, idProducto, cantidad, precioacordado, fechaEntrega, entregado, sucursal, proveedor) values (?,?,?,?,?,?,?,?)");
+        q.setParameters(pID, idProducto, cat, precioA, fechaEn, estado, idSucursal, idProveedor);
         return (long) q.executeUnique();
 	}
 
 	/**
-	 * Crea y ejecuta la sentencia SQL para encontrar la información de LOS BARES de la 
+	 * Crea y ejecuta la sentencia SQL para encontrar la informaciï¿½n de LOS BARES de la 
 	 * base de datos de Parranderos
 	 * @param pm - El manejador de persistencia
 	 * @return Una lista de objetos BAR

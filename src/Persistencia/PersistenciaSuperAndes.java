@@ -88,6 +88,8 @@ public class PersistenciaSuperAndes {
 		tablas.add("CarritosCompras");
 		//15
 		tablas.add("ProductosEnCarritos");
+		//16
+		tablas.add("NivelesReordenEstantes");
     }
 
 	private PersistenciaSuperAndes (JsonObject tableConfig)
@@ -177,6 +179,10 @@ public class PersistenciaSuperAndes {
 	
 	public String darTablaProductosCarrito() {
 		return tablas.get(15);
+	}
+	
+	public String darTablaReordenEstante() {
+		return tablas.get(16);
 	}
 
 	public static PersistenciaSuperAndes getInstance (JsonObject tableConfig)
@@ -273,7 +279,7 @@ public class PersistenciaSuperAndes {
         }
 	}
 	
-	public Venta adicionarVentas( Date pFecha, long idProducto, long idLocal) 
+	public Venta adicionarVentas( Date pFecha, long idProducto, long idLocal, long idConsumidor) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -283,7 +289,7 @@ public class PersistenciaSuperAndes {
             System.out.println("idSuper");
             long idSuper = nextval ();
             System.out.println("LanzaraException");
-            long tuplasInsertadas = sqlVentas.adicionarVentas(pm, idSuper,   pFecha,  idProducto,  idLocal);
+            long tuplasInsertadas = sqlVentas.adicionarVentas(pm, idSuper,   pFecha,  idProducto,  idLocal, idConsumidor);
             tx.commit();
 
             log.trace ("Inserci�n de Bar: " + tuplasInsertadas + " tuplas insertadas");
@@ -307,7 +313,7 @@ public class PersistenciaSuperAndes {
         }
 	}
 	
-	public Pedido adicionarPedido( String nombreP, long idProveedor, Integer cat, boolean estado) 
+	public Pedido adicionarPedido( long idProducto, int cat, double precioA, Timestamp fechaEn, char estado, long idSucursal, long idProveedor) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -317,12 +323,12 @@ public class PersistenciaSuperAndes {
             System.out.println("idSuper");
             long idPed = nextval ();
             System.out.println("LanzaraException");
-            long tuplasInsertadas = sqlPedidos.adicionarPedido(pm, idPed, nombreP, idProveedor, cat, estado);
+            long tuplasInsertadas = sqlPedidos.adicionarPedido(pm, idPed, idProducto, cat, precioA, fechaEn, estado, idSucursal, idProveedor);
             tx.commit();
 
-            log.trace ("Inserci�n de Bar: " + nombreP + ": " + tuplasInsertadas + " tuplas insertadas");
+            //log.trace ("Inserci�n de Bar: " + nombreP + ": " + tuplasInsertadas + " tuplas insertadas");
 
-            return new Pedido (idPed, nombreP, cat, estado);
+            return new Pedido (idPed, idProducto, cat, estado);
         }
         catch (Exception e)
         {
@@ -456,8 +462,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlProducto.adicionarProducto(pm, idProduc, nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion, fecha, precioU, tipo, subTipo);
 			tx.commit();
 			
-			return new Producto();
-			// TODO retornar un producto completo
+			return new Producto(idProduc, nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion, fecha, precioU, tipo, subTipo);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -594,13 +599,21 @@ public class PersistenciaSuperAndes {
 			Carrito car = darCarrito(idCarrito);
 			long idCar = car.getId();
 			Producto pro = darProducto(idProducto);
-			long idPro = 
+			long idPro = pro.getID();
+			long tuplasIn = sqlProductosCarrito.adicionarProductoCarrito(pm, idCar, idPro);
+			tx.commit();
+			
+			return new ProductosCarrito(idCar,idPro);
 		}
 		catch(Exception e){
-			
+			e.printStackTrace();
+			return null;
 		}
 		finally {
-			
+			if(tx.isActive()) {
+				tx.rollback();
+			}
+			pm.close();
 		}
 	}
 	

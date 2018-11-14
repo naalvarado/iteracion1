@@ -1,6 +1,7 @@
 package Negocio;
 
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Pedido {
@@ -8,23 +9,23 @@ public class Pedido {
 	private long id;
 	private int cantidad;
 	private double prescioAcordado;
-	private Date fechaEntrega;
-	private boolean estregada;
-	private String nomProducto;
+	private Timestamp fechaEntrega;
+	private char estregada;
+	private long nomProducto;
 	
 	
 	private Sucursal sucursal;
 	private Proveedor pro;
 	
-	public Pedido(int pCantidad, double pPre, Date pFecha, Sucursal pSu, Proveedor pPro){
+	public Pedido(int pCantidad, double pPre, Timestamp pFecha, Sucursal pSu, Proveedor pPro){
 		this.cantidad = pCantidad;
 		this.prescioAcordado = pPre;
 		this.fechaEntrega = pFecha;
-		this.estregada = false;
+		this.estregada = 'N';
 		this.sucursal = pSu;
 		this.pro = pPro;
 	}
-	public Pedido(long idProveedor,String nombreP ,Integer cat, boolean estado)
+	public Pedido(long idProveedor,long nombreP ,int cat, char estado)
 	{
 		this.id = idProveedor;
 		this.cantidad = cat;
@@ -40,7 +41,7 @@ public class Pedido {
 		return fechaEntrega;
 	}
 	
-	public boolean getEntregada() {
+	public char getEntregada() {
 		return estregada;
 	}
 	
@@ -60,11 +61,11 @@ public class Pedido {
 		this.prescioAcordado = pPrecio;
 	}
 	
-	public void setFecha(Date pFecha) {
+	public void setFecha(Timestamp pFecha) {
 		this.fechaEntrega = pFecha;
 	}
 	
-	public void setEntregada(boolean pEntregada) {
+	public void setEntregada(char pEntregada) {
 		this.estregada = pEntregada;
 	}
 	

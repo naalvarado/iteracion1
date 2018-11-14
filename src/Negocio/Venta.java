@@ -8,6 +8,7 @@ public class Venta {
 	private Date fecha;
 	private long id;
 	private long local;
+	private long consumidor;
 	
     
 

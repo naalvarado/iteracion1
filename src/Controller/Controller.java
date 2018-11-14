@@ -36,17 +36,17 @@ public class Controller {
 	public static void adicionarSucursal(String nombre,  String ciudad, String direccion) {
 		manager.adicionarSucursal(nombre, ciudad, direccion);
 	}
-	public static void adicionarVentas(Date pFecha, long idProducto, long idLocal)
+	public static void adicionarVentas(Date pFecha, long idProducto, long idLocal, long idConsumidor)
 	{
-		manager.adicionarVenta(pFecha, idProducto,  idLocal);
+		manager.adicionarVenta(pFecha, idProducto,  idLocal, idConsumidor);
 	}
 	public static void adicionarPromocion(String descripcion, String nombre, String tipo, Timestamp fechaIni, Timestamp fechaFinal,double cvendidas, double cpagadas,double decuent)
 	{
 		manager.adicionarPromocion(nombre, descripcion, tipo, fechaIni, fechaFinal, decuent, cvendidas, cpagadas);
 	}
-	public static void registrarPedido(String nombreP, long idProveedor, Integer cat, boolean estado)
+	public static void registrarPedido(long idProducto, int cat, double precioA, Timestamp fechaEn, char estado, long idSucursal, long idProveedor)
 	{
-		manager.registrarPedidoProducto(nombreP, idProveedor, cat, estado);
+		manager.registrarPedidoProducto(idProducto, cat, precioA, fechaEn, estado, idSucursal, idProveedor);
 	}
 	
 }
