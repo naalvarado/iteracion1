@@ -47,7 +47,7 @@ public class SQLVentas {
 	 */
 	public long adicionarVentas (PersistenceManager pm, long pID, Timestamp pFecha, long idProducto, long idLocal, long idConsumidor) 
 	{
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaVentas() + "(id, fecha, idProducto, local, consumidor) values (?,?,?,?,?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaVentas() + "(id, fecha, id_Producto, local, consumidor) values (?,?,?,?,?)");
         q.setParameters(pID,pFecha, idProducto, idLocal, idConsumidor);
         return (long) q.executeUnique();
 	}

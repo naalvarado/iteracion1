@@ -69,7 +69,7 @@ public class PersistenciaSuperAndes {
 		//5
 		tablas.add ("Sucursal");
 		//6
-		tablas.add("Venta");
+		tablas.add("VENTAS");
 		//7
 		tablas.add("Pedidos");
 		//8
@@ -287,17 +287,16 @@ public class PersistenciaSuperAndes {
             tx.begin();
             System.out.println("idSuper");
             long idSuper = nextval ();
-            System.out.println("LanzaraException");
             long tuplasInsertadas = sqlVentas.adicionarVentas(pm, idSuper,   pFecha,  idProducto,  idLocal, idConsumidor);
             tx.commit();
-
+            System.out.println("Lo logra");
             log.trace ("Inserci�n de Bar: " + tuplasInsertadas + " tuplas insertadas");
 
             return new Venta (idSuper,  pFecha,  idProducto,  idLocal);
         }
         catch (Exception e)
         {
-//        	e.printStackTrace();
+        	e.printStackTrace();
         	System.out.println("LanzaException");
         	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
         	return null;

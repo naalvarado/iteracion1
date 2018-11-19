@@ -1,3 +1,4 @@
+create sequence SuperAndes_sequence;
 -- 1 Consumidor
 CREATE TABLE Consumidores(
   ID NUMBER NOT NULL PRIMARY KEY,

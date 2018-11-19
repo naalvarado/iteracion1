@@ -67,6 +67,9 @@ public class SuperAndesConsola {
 						long idC = sc.nextLong();
 						Controller.Controller.adicionarVentas(fecha, idP, idL, idC);
 						break;
+					case 2:
+						// TODO Agregar consumidor producto y local
+						break;
 					case 5:
 						fin3 = true;
 						break;
