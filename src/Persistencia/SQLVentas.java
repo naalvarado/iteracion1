@@ -1,5 +1,6 @@
 package Persistencia;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class SQLVentas {
 	 * @param nombre
 	 * @return
 	 */
-	public long adicionarVentas (PersistenceManager pm, long pID, Date pFecha, long idProducto, long idLocal, long idConsumidor) 
+	public long adicionarVentas (PersistenceManager pm, long pID, Timestamp pFecha, long idProducto, long idLocal, long idConsumidor) 
 	{
         Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaVentas() + "(id, fecha, idProducto, local, consumidor) values (?,?,?,?,?)");
         q.setParameters(pID,pFecha, idProducto, idLocal, idConsumidor);
@@ -68,7 +69,7 @@ public class SQLVentas {
 	public List<Venta> darVentas (PersistenceManager pm)
 	{
 		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaVentas());
-		q.setResultClass(SuperMercado.class);
+		q.setResultClass(Venta.class);
 		return (List<Venta>) q.executeList();
 	}
 	
@@ -78,4 +79,12 @@ public class SQLVentas {
         q.setParameters(idVenta);
         return (long) q.executeUnique();            
 	}
+	
+	public List<Venta> darVentasProductoFechas(PersistenceManager pm, long pProducto, Timestamp fechaIn, Timestamp fechaFin){
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaVentas() + " WHERE idProducto = ? AND BETWEEN ? AND ?");
+		q.setResultClass(Venta.class);
+		q.setParameters(pProducto,fechaIn,fechaFin);
+		return (List<Venta>) q.executeList();
+	}
+	
 }

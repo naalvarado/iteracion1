@@ -15,7 +15,6 @@ public class Controller {
 	{
 		manager.adicionarSuperMercado(nombre);
 		
-		
 	}
 	
 	public static void adicionarConsumidorCedula(int pDoc, String pNombre, String pEmail, String pDireccion)
@@ -36,7 +35,7 @@ public class Controller {
 	public static void adicionarSucursal(String nombre,  String ciudad, String direccion) {
 		manager.adicionarSucursal(nombre, ciudad, direccion);
 	}
-	public static void adicionarVentas(Date pFecha, long idProducto, long idLocal, long idConsumidor)
+	public static void adicionarVentas(Timestamp pFecha, long idProducto, long idLocal, long idConsumidor)
 	{
 		manager.adicionarVenta(pFecha, idProducto,  idLocal, idConsumidor);
 	}
@@ -47,6 +46,10 @@ public class Controller {
 	public static void registrarPedido(long idProducto, int cat, double precioA, Timestamp fechaEn, char estado, long idSucursal, long idProveedor)
 	{
 		manager.registrarPedidoProducto(idProducto, cat, precioA, fechaEn, estado, idSucursal, idProveedor);
+	}
+	
+	public static void darVentasProductoFechas(long pProducto, Timestamp fechaIn, Timestamp fechaFin) {
+		manager.darVentasProductoFechas(pProducto, fechaIn, fechaFin);
 	}
 	
 }

@@ -17,9 +17,9 @@ public class SQLProductosCarrito {
 		this.pp = pPer;
 	}
 	
-	public long adicionarProductoCarrito(PersistenceManager pm, long IdCarrito, long IdProducto) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProductosCarrito() + " (idCarrito, idProducto) values (?,?)");
-		q.setParameters(IdCarrito,IdProducto);
+	public long adicionarProductoCarrito(PersistenceManager pm, long pId, long IdCarrito, long IdProducto) {
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaProductosCarrito() + " (id, idCarrito, idProducto) values (?,?,?)");
+		q.setParameters(pId,IdCarrito,IdProducto);
 		return (long) q.executeUnique();
 	}
 	

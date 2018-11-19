@@ -22,14 +22,15 @@ public class ConexionTest {
 	 * 			Constantes
 	 *****************************************************************/
 	/**
-	 * Logger para escribir la traza de la ejecución
+	 * Logger para escribir la traza de la ejecuciï¿½n
 	 */
 	private static Logger log = Logger.getLogger(ConexionTest.class.getName());
 	
 	/**
-	 * Ruta al archivo de configuración de los nombres de tablas de la base de datos: La unidad de persistencia existe y el esquema de la BD también
+	 * Ruta al archivo de configuraciï¿½n de los nombres de tablas de la base de datos: La unidad de persistencia existe y el esquema de la BD tambiï¿½n
 	 */
 	private static final String CONFIG_TABLAS_A = "./Resource/config/TablasBD_A.json"; 
+	private static final String CONFIG_TABLAS_ERR_DS = "./src/main/resources/config/TablasBD_ErrorDataStore.json"; 
 	
 	/* ****************************************************************
 	 * 			Atributos
@@ -50,37 +51,56 @@ public class ConexionTest {
 	  	{
 	  	  	try
 			{
-				log.info ("Probando el acceso a la base de datos con datos válidos (BD, credenciales, esquema");
-				System.out.println("Entra");
+				log.info ("Probando el acceso a la base de datos con datos vï¿½lidos (BD, credenciales, esquema");
 				superAndes = new SuperAndes (openConfig (CONFIG_TABLAS_A));
-				System.out.println("Sale");
-				log.info ("Conexión realizada correstamente");
-				log.info ("Cerrando la conexión");
+				log.info ("Conexiï¿½n realizada correstamente");
+				log.info ("Cerrando la conexiï¿½n");
 				
 				superAndes.cerrarUnidadPersistencia ();
-				log.info ("Conexión cerrada");
+				log.info ("Conexiï¿½n cerrada");
 			}
 			catch (Exception e)
 			{
 //				e.printStackTrace();
-				log.info ("Prueba de acceso normal FALLÓ !!. La excepción generada es: " + e.getClass ().getName ());
+				log.info ("Prueba de acceso normal FALLï¿½ !!. La excepciï¿½n generada es: " + e.getClass ().getName ());
 				log.info ("La causa es: " + e.getCause ().toString ());
 
-				String msg = "Prueba de acceso normal a la base de datos falló !! Revise persistence.xml.\n";
-				msg += "Revise el log de parranderos y el de datanucleus para conocer el detalle de la excepción";
+				String msg = "Prueba de acceso normal a la base de datos fallï¿½ !! Revise persistence.xml.\n";
+				msg += "Revise el log de parranderos y el de datanucleus para conocer el detalle de la excepciï¿½n";
 //				System.out.println (msg);
 				fail (msg);
 			}
 	  	}
 	   
+	    @Test
+	    public void baseDatosInaccesible ()
+	    {
+			try
+			{
+		    	log.info ("Probando el acceso a la base de datos con una base de datos que no existe");
+		    	superAndes = new SuperAndes (openConfig (CONFIG_TABLAS_ERR_DS));
+				fail ("DeberÃ­a fallar. La base de datos no existe !!");
+			}
+			catch (Exception e)
+			{
+//				e.printStackTrace();
+				log.info ("Prueba realizada exitosamente. La excepciÃ³n generada es: " + e.getClass ().getName ());
+				log.info ("La causa es: " + e.getCause ().toString ());
+
+				String msg = "Prueba de base de datos inaccesible correcta.\n";
+				msg += "Revise el log de parranderos y el de datanucleus para conocer el detalle de la excepciÃ³n";
+				System.out.println (msg);
+			}
+	    }
+	   
 	   /* ****************************************************************
-		 * 			Métodos de configuración
+		 * 			Mï¿½todos de configuraciï¿½n
 		 *****************************************************************/
 	    /**
-	     * Lee datos de configuración para la aplicación, a partir de un archivo JSON o con valores por defecto si hay errores.
-	     * @param tipo - El tipo de configuración deseada
-	     * @param archConfig - Archivo Json que contiene la configuración
-	     * @return Un objeto JSON con la configuración del tipo especificado
+	     * Lee datos de configuraciï¿½n para la aplicaciï¿½n, a partir de un archivo JSON o con valores por defecto si hay errores.
+	     * @param tipo - El tipo de configuraciï¿½n deseada
+	     * @param archConfig - Archivo Json que contiene la configuraciï¿½n
+	     * @return Un objeto JSON con la configuraciï¿½n del tipo especificado
 	     * 			NULL si hay un error en el archivo.
 	     */
 	    private JsonObject openConfig (String archConfig)
@@ -92,13 +112,13 @@ public class ConexionTest {
 				FileReader file = new FileReader (archConfig);
 				JsonReader reader = new JsonReader ( file );
 				config = gson.fromJson(reader, JsonObject.class);
-				log.info ("Se encontró un archivo de configuración de tablas válido");
+				log.info ("Se encontrï¿½ un archivo de configuraciï¿½n de tablas vï¿½lido");
 			} 
 			catch (Exception e)
 			{
 //				e.printStackTrace ();
-				log.info ("NO se encontró un archivo de configuración válido");			
-				JOptionPane.showMessageDialog(null, "No se encontró un archivo de configuración de tablas válido: ", "TipoBebidaTest", JOptionPane.ERROR_MESSAGE);
+				log.info ("NO se encontrï¿½ un archivo de configuraciï¿½n vï¿½lido");			
+				JOptionPane.showMessageDialog(null, "No se encontrï¿½ un archivo de configuraciï¿½n de tablas vï¿½lido: ", "TipoBebidaTest", JOptionPane.ERROR_MESSAGE);
 			}	
 	        return config;
 	    }	

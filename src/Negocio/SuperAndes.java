@@ -124,7 +124,7 @@ public class SuperAndes {
         log.info ("Listando Bares: " + bares.size() + " bares existentes");
         return bares;
 	}
-	public Venta adicionarVenta(Date pFecha, long idProducto, long idLocal, long idConsumidor) {
+	public Venta adicionarVenta(Timestamp pFecha, long idProducto, long idLocal, long idConsumidor) {
 		Venta venta = pp.adicionarVentas(pFecha, idProducto,  idLocal, idConsumidor);
 		return venta;
 	}
@@ -133,4 +133,10 @@ public class SuperAndes {
 		Pedido venta = pp.adicionarPedido(idProducto, cat, precioA, fechaEn, estado, idSucursal, idProveedor);
 		return venta;
 	}
+	
+	public List<Venta> darVentasProductoFechas(long pProducto, Timestamp fechaIn, Timestamp fechaFin){
+		List<Venta> ventas = pp.darVentasProductoFechas(pProducto, fechaIn, fechaFin);
+		return ventas;
+	}
+	
 }

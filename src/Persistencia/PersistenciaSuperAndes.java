@@ -59,7 +59,7 @@ public class PersistenciaSuperAndes {
 		//0
 		tablas.add ("SuperAndes_sequence");
 		//1
-		tablas.add ("SuperMercados");
+		tablas.add ("SUPERMERCADOS");
 		//2
 		tablas.add ("Consumidores");
 		//3
@@ -252,7 +252,6 @@ public class PersistenciaSuperAndes {
         try
         {
             tx.begin();
-            System.out.println("idSuper");
             long idSuper = nextval ();
             System.out.println("LanzaraException");
             long tuplasInsertadas = sqlSuperMercado.adicionarSuperMercado(pm, idSuper, nombre);
@@ -279,7 +278,7 @@ public class PersistenciaSuperAndes {
         }
 	}
 	
-	public Venta adicionarVentas( Date pFecha, long idProducto, long idLocal, long idConsumidor) 
+	public Venta adicionarVentas( Timestamp pFecha, long idProducto, long idLocal, long idConsumidor) 
 	{
 		PersistenceManager pm = pmf.getPersistenceManager();
         Transaction tx=pm.currentTransaction();
@@ -537,7 +536,7 @@ public class PersistenciaSuperAndes {
 			long tuplasInsertadas = sqlEstante.adicionarEstante(pm, idEstante, idLocal, volumen, maxPeso);
 			tx.commit();
 			
-			return new Estante();
+			return new Estante(idEstante,idLocal,volumen,maxPeso);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -596,11 +595,12 @@ public class PersistenciaSuperAndes {
 		Transaction tx = pm.currentTransaction();
 		try {
 			tx.begin();
+			long  id = nextval();
 			Carrito car = darCarrito(idCarrito);
 			long idCar = car.getId();
 			Producto pro = darProducto(idProducto);
 			long idPro = pro.getID();
-			long tuplasIn = sqlProductosCarrito.adicionarProductoCarrito(pm, idCar, idPro);
+			long tuplasIn = sqlProductosCarrito.adicionarProductoCarrito(pm, id, idCar, idPro);
 			tx.commit();
 			
 			return new ProductosCarrito(idCar,idPro);
@@ -647,6 +647,14 @@ public class PersistenciaSuperAndes {
 	{
 		return null;
 		
+	}
+	
+	//-----------------------------------------------------------
+	//  ITERACION 3
+	//-----------------------------------------------------------
+	
+	public List<Venta> darVentasProductoFechas(long pProducto, Timestamp fechaIn, Timestamp fechaFin){
+		return sqlVentas.darVentasProductoFechas(pmf.getPersistenceManager(), pProducto, fechaIn, fechaFin);
 	}
 	
  
