@@ -52,4 +52,8 @@ public class Controller {
 		manager.darVentasProductoFechas(pProducto, fechaIn, fechaFin);
 	}
 	
+	public static void adicionarLocal(String Direccion) {
+		manager.adicionarLocal(Direccion);
+	}
+	
 }

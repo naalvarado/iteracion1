@@ -28,8 +28,73 @@ public class SuperAndesConsola {
 			{
 			//1C cargar informacion dada
 			case 1:
-				String nombre = sc.next();
-				Controller.Controller.adiccionarSuperMercado(nombre);
+				boolean fin1 = false;
+				while(!fin1) {
+					printMenuI1();
+					int option1 = sc.nextInt();
+					switch(option1) {
+					case 1:
+						System.out.println("Cedula(C) o NIT(N)");
+						char c11 = sc.next().charAt(0);
+						if(c11 == 'C') {
+							System.out.println("Escriva el numero de documento: ");
+							int cedula = sc.nextInt();
+							System.out.println("Escriva el nombre: ");
+							String nombre11 = sc.next();
+							System.out.println("Escriva el email: ");
+							String email = sc.next();
+							System.out.println("Escriva la direccion: ");
+							String direccion11 = sc.next();
+							Controller.Controller.adicionarConsumidorCedula(cedula, nombre11, email, direccion11);
+						}
+						else if(c11 == 'N') {
+							System.out.println("Escriva el NIT: ");
+							int NIT = sc.nextInt();
+							System.out.println("Escriva el nombre: ");
+							String nombre11 = sc.next();
+							System.out.println("Escriva el email: ");
+							String email = sc.next();
+							System.out.println("Escriva la direccion: ");
+							String direccion11 = sc.next();
+							Controller.Controller.adicionarConsumidorNIT(NIT, nombre11, email, direccion11);
+						}
+						else {
+							System.out.println("Obcion incorrecta");
+						}
+						break;
+					case 2:
+						System.out.println("Escriva el nombre: ");
+						String nombre12 = sc.next();
+						System.out.println("Escriva el codigo: ");
+						String codigo = sc.next();
+						System.out.println("Escriva la marca: ");
+						String marca = sc.next();
+						System.out.println("Escriva la presentacion: ");
+						String presentacion = sc.next();
+						System.out.println("Escriva la cantidad de presentacion: ");
+						int cantPre = sc.nextInt();
+						System.out.println("Escriva el volumen: ");
+						int volumen = sc.nextInt();
+						int calificacion = 0;
+						Timestamp fecha = new Timestamp(System.nanoTime());
+						System.out.println("Escriva el precio Unitario: ");
+						double precio = sc.nextDouble();
+						System.out.println("Escriva el tipo: ");
+						String tipo12 = sc.next();
+						System.out.println("Escriva el subtipo: ");
+						String subtipo = sc.next();
+						Controller.Controller.adicionarProductoP(nombre12, codigo, marca, presentacion, cantPre, volumen, calificacion, fecha, precio, tipo12, subtipo);
+						break;
+					case 3:
+						System.out.println("Escriva la direccion: ");
+						String direcion = sc.next();
+						Controller.Controller.adicionarLocal(direcion);
+						break;
+					case 5:
+						fin1 = true;
+						break;
+					}
+				}
 				break;
 			case 2:
 				System.out.println("Escriva el tipo de producto (Peresedero, NoPeresedero o Abarrote)");
@@ -106,6 +171,17 @@ public class SuperAndesConsola {
 		System.out.println("MENU: ");
 		//System.out.println("0: Adicionar Venta");
 		System.out.println("1: Dar Ventas de un producto en un lapso de tiempo");
+		System.out.println("5: Exit");
+		
+	}
+	
+	private static void printMenuI1() {
+		System.out.println("------------Nicolas Alvarado----------------");
+		System.out.println("----------------201630444-------------------");
+		System.out.println("MENU: ");
+		System.out.println("1: Agregar Consumidor");
+		System.out.println("2: Agregar Producto");
+		System.out.println("3: Agregar Local");
 		System.out.println("5: Exit");
 		
 	}
