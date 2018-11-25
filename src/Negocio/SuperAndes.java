@@ -124,6 +124,22 @@ public class SuperAndes {
         log.info ("Listando Bares: " + bares.size() + " bares existentes");
         return bares;
 	}
+	
+	public List<Producto> darProductos() {
+		List<Producto> productos = pp.darProductos();
+		return productos;
+	}
+	
+	public List<LocalVenta> darLocales() {
+		List<LocalVenta> locales = pp.darLocales();
+		return locales;
+	}
+	
+	public List<Consumidor> darConsumidores() {
+		List<Consumidor> consumidores = pp.darConsumidores();
+		return consumidores;
+ 	}
+	
 	public Venta adicionarVenta(Timestamp pFecha, long idProducto, long idLocal, long idConsumidor) {
 		Venta venta = pp.adicionarVentas(pFecha, idProducto,  idLocal, idConsumidor);
 		return venta;

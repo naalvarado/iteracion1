@@ -7,6 +7,7 @@ import javax.jdo.Query;
 
 import Negocio.Bodega;
 import Negocio.LocalVenta;
+import Negocio.Producto;
 
 public class SQLLocal {
 	
@@ -53,6 +54,13 @@ public class SQLLocal {
         Query q = pm.newQuery(SQL, "DELETE FROM " + pp.darTablaLocal() + " WHERE id = ?");
         q.setParameters(idLocal);
         return (long) q.executeUnique();            
+	}
+	
+	public List<LocalVenta> darLocales(PersistenceManager pm)
+	{
+		Query q = pm.newQuery(SQL, "SELECT * FROM " + pp.darTablaLocal());
+		q.setResultClass(LocalVenta.class);
+		return (List<LocalVenta>) q.executeList();
 	}
 
 }

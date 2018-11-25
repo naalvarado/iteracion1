@@ -1,11 +1,9 @@
 package Controller;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
-import Negocio.LocalVenta;
-import Negocio.SuperAndes;
+import Negocio.*;
 
 public class Controller {
 
@@ -54,6 +52,18 @@ public class Controller {
 	
 	public static void adicionarLocal(String Direccion) {
 		manager.adicionarLocal(Direccion);
+	}
+	
+	public static List<Producto> darProductos(){
+		return manager.darProductos();
+	}
+	
+	public static List<LocalVenta> darLocales() {
+		return manager.darLocales();
+	}
+	
+	public static List<Consumidor> darConsumidores() {
+		return manager.darConsumidores();
 	}
 	
 }

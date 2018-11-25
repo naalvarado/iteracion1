@@ -47,7 +47,7 @@ public class SQLConsumidor {
 	public long adicionarConsumidorCedula (PersistenceManager pm, long id, int pDoc, String pNombre, String pEmail, String pDireccion) 
 	{
 		
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaConsumidor() + "(id, documento, nit, nombre, email, direccion, puntos) values (?,?,?,?,?,?,?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaConsumidor() + "(id, documentoide, nit, nombre, email, direccion, puntos) values (?,?,?,?,?,?,?)");
         q.setParameters(id, pDoc, null, pNombre, pEmail, pDireccion, 0);
         return (long) q.executeUnique();
         
@@ -56,7 +56,7 @@ public class SQLConsumidor {
 	public long adicionarConsumidorNIT (PersistenceManager pm, long id, int pDoc, String pNombre, String pEmail, String pDireccion) 
 	{
 		
-        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaConsumidor() + "(id, documento, nit, nombre, email, direccion, puntos) values (?,?,?,?,?,?,?)");
+        Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaConsumidor() + "(id, documentoide, nit, nombre, email, direccion, puntos) values (?,?,?,?,?,?,?)");
         q.setParameters(id, null, pDoc, pNombre, pEmail, pDireccion, 0);
         return (long) q.executeUnique();
         

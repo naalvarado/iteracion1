@@ -353,11 +353,11 @@ public class PersistenciaSuperAndes {
         try
         {
             tx.begin();
-            System.out.println("idSuper");
             long idConsum = nextval ();
-            System.out.println("LanzaraException");
             long tuplasInsertadas = sqlConsumidor.adicionarConsumidorCedula(pm,idConsum,pDoc,  pNombre, pEmail, pDireccion);
+            System.out.println(tuplasInsertadas + " Antes del commit");
             tx.commit();
+            System.out.println("Despues del commit");
 
             log.trace ("Inserci�n de Bar: " + pNombre + ": " + tuplasInsertadas + " tuplas insertadas");
 
@@ -365,8 +365,7 @@ public class PersistenciaSuperAndes {
         }
         catch (Exception e)
         {
-//        	e.printStackTrace();
-        	System.out.println("LanzaException");
+        	e.printStackTrace();
         	log.error ("Exception : " + e.getMessage() + "\n" + darDetalleException(e));
         	return null;
         }
@@ -623,17 +622,18 @@ public class PersistenciaSuperAndes {
 	 */
 	private long nextval ()
 	{
-		System.out.println("EntraNext");
+		System.out.println("EntraNextVal");
         long resp = sqlUtil.nextval (pmf.getPersistenceManager());
-        System.out.println("SFSFSFSFS");
+        System.out.println("SaleNextVal: " + resp);
         log.trace ("Generando secuencia: " + resp);
         return resp;
     }
 
 	/**
-	 * M�todo que consulta todas las tuplas en la tabla BAR
-	 * @return La lista de objetos BAR, construidos con base en las tuplas de la tabla BAR
+	 * Metodos que retornan listas de objetos
+	 * 
 	 */
+	
 	public List<SuperMercado> darSupers ()
 	{
 		return sqlSuperMercado.darSupers (pmf.getPersistenceManager());
@@ -642,10 +642,17 @@ public class PersistenciaSuperAndes {
 	{
 		return sqlVentas.darVentas (pmf.getPersistenceManager());
 	}
-	public Promocion adicionarPromocion ()
-	{
-		return null;
-		
+	
+	public List<Producto> darProductos(){
+		return sqlProducto.darProductos(pmf.getPersistenceManager());
+	}
+	
+	public List<LocalVenta> darLocales(){
+		return sqlLocal.darLocales(pmf.getPersistenceManager());
+	}
+	
+	public List<Consumidor> darConsumidores(){
+		return sqlConsumidor.darConsumidores(pmf.getPersistenceManager());
 	}
 	
 	//-----------------------------------------------------------

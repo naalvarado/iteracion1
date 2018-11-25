@@ -4,9 +4,10 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
-import Negocio.SuperAndes;
+import Negocio.*;
 
 public class SuperAndesConsola {
 
@@ -22,7 +23,14 @@ public class SuperAndesConsola {
 			printMenu();
 
 			//opcion req
-			int option = sc.nextInt();
+			String opt = sc.next();
+			int option = 0;
+			if(opt.equals("Q")) {
+				fin = true;
+			}
+			else {
+				option = Integer.parseInt(opt);
+			}
 
 			switch(option)
 			{
@@ -31,7 +39,14 @@ public class SuperAndesConsola {
 				boolean fin1 = false;
 				while(!fin1) {
 					printMenuI1();
-					int option1 = sc.nextInt();
+					String opt1 = sc.next();
+					int option1 = 0;
+					if(opt1.equals("Q")) {
+						fin1 = true;
+					}
+					else {
+						option1 = Integer.parseInt(opt1);
+					}
 					switch(option1) {
 					case 1:
 						System.out.println("Cedula(C) o NIT(N)");
@@ -90,9 +105,6 @@ public class SuperAndesConsola {
 						String direcion = sc.next();
 						Controller.Controller.adicionarLocal(direcion);
 						break;
-					case 5:
-						fin1 = true;
-						break;
 					}
 				}
 				break;
@@ -116,7 +128,14 @@ public class SuperAndesConsola {
 				boolean fin3 = false;
 				while(!fin3) {
 					printMenuI3();
-					int option3 = sc.nextInt();
+					String opt3 = sc.next();
+					int option3 = 0;
+					if(opt3.equals("Q")) {
+						fin3 = true;
+					}
+					else {
+						option3 = Integer.parseInt(opt3);
+					}
 					switch(option3) {
 					case 0:
 						System.out.println("Ingrese la fecha: ");
@@ -124,10 +143,22 @@ public class SuperAndesConsola {
 						SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 						Date parsedDate = dateFormat.parse(fechaS);
 						Timestamp fecha = new java.sql.Timestamp(parsedDate.getTime());
+						List<Producto> productos = Controller.Controller.darProductos();
+						for(Producto p : productos) {
+							System.out.println(p.getID());
+						}
 						System.out.println("Ingrese el id del producto: ");
 						long idP = sc.nextLong();
+						List<LocalVenta> locales = Controller.Controller.darLocales();
+						for(LocalVenta lv : locales) {
+							System.out.println(lv.getID());
+						}
 						System.out.println("Ingrese el id del Local: ");
 						long idL = sc.nextLong();
+						List<Consumidor> consumidores = Controller.Controller.darConsumidores();
+						for(Consumidor c : consumidores) {
+							System.out.println(c.getID());
+						}
 						System.out.println("Ingrese el id del Consumidor: ");
 						long idC = sc.nextLong();
 						Controller.Controller.adicionarVentas(fecha, idP, idL, idC);
@@ -145,9 +176,6 @@ public class SuperAndesConsola {
 				System.out.println("Ingrese el nombre");
 				String nombreSucursal = sc.next();
 				break;
-			case 5:
-				fin = true;
-				break;
 			}
      	}
 	}
@@ -162,7 +190,7 @@ public class SuperAndesConsola {
 		System.out.println("1: Iteracion 1");
 		System.out.println("2: Iteracion 2");
 		System.out.println("3: Iteracion 3");
-		System.out.println("5: Exit");
+		System.out.println("Q: Exit");
 	}
 	
 	private static void printMenuI3() {
@@ -182,7 +210,7 @@ public class SuperAndesConsola {
 		System.out.println("1: Agregar Consumidor");
 		System.out.println("2: Agregar Producto");
 		System.out.println("3: Agregar Local");
-		System.out.println("5: Exit");
+		System.out.println("Q: Exit");
 		
 	}
 	
