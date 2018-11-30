@@ -21,8 +21,8 @@ public class SQLProducto {
 	public long adicionarProducto(PersistenceManager pm, long idProducto, String nombre, String codigo, String marca, String presentacion, int cantidadPresentacion, int volumen, int calificacion, 
 			Timestamp fecha, double precioU, String tipo, String subTipo) {
 		System.out.println("Entra a adicionar Producto");
-		Query q = pm.newQuery(SQL, "INSERT INTO  " + pp.darTablaProducto() + "(id, sucursal, bodega, estante, nombre, codigo, marca, presentacion, cantidadP, volumen,"
-				+ " calificacion, fecha, precioUnidad, tipo, subTipo) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+		Query q = pm.newQuery(SQL, "INSERT INTO  " + pp.darTablaProducto() + "(id, sucursal, bodega, estante, nombre, codigo, marca, presentacion, CANTIDAD_PRESENTACION, VOLUMEN_PAQUETE,"
+				+ " CALIFICACION_CALIDAD, FECHA_VENCIMIENTO, PRECIO_UNIDAD, tipo, SUB_TIPO) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 		System.out.println("Crea la query");
 		q.setParameters(idProducto, null, null, null, nombre, codigo, marca, presentacion, cantidadPresentacion, volumen, calificacion, fecha, precioU, tipo, subTipo);
 		System.out.println("Le pone los parametros a la query");
