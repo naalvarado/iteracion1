@@ -63,7 +63,7 @@ public class PersistenciaSuperAndes {
 		//2
 		tablas.add ("Consumidores");
 		//3
-		tablas.add ("Producto");
+		tablas.add ("Productos");
 		//4
 		tablas.add("Promociones");
 		//5
@@ -224,6 +224,7 @@ public class PersistenciaSuperAndes {
 		sqlPedidos = new SQLPedidos(this);
 		sqlCarrito = new SQLCarrito(this);
 		sqlProductosCarrito = new SQLProductosCarrito(this);
+		sqlProducto = new SQLProducto(this);
 	}
 	
 	private String darDetalleException(Exception e) 
@@ -622,7 +623,6 @@ public class PersistenciaSuperAndes {
 	 */
 	private long nextval ()
 	{
-		System.out.println("EntraNextVal");
         long resp = sqlUtil.nextval (pmf.getPersistenceManager());
         System.out.println("SaleNextVal: " + resp);
         log.trace ("Generando secuencia: " + resp);

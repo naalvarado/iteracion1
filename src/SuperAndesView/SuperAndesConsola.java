@@ -91,7 +91,7 @@ public class SuperAndesConsola {
 						System.out.println("Escriva el volumen: ");
 						int volumen = sc.nextInt();
 						int calificacion = 0;
-						Timestamp fecha = new Timestamp(System.nanoTime());
+						Timestamp fecha = new Timestamp(System.currentTimeMillis());
 						System.out.println("Escriva el precio Unitario: ");
 						double precio = sc.nextDouble();
 						System.out.println("Escriva el tipo: ");
