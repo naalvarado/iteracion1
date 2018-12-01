@@ -20,7 +20,7 @@ public class SQLLocal {
 	}
 	
 	public long adicionarLocal(PersistenceManager pm, long idLocal, String direccion) {
-		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaLocal() +  "(id, sucursal, direcion)"
+		Query q = pm.newQuery(SQL, "INSERT INTO " + pp.darTablaLocal() +  "(id, sucursal, DIRECCION)"
 				+ " values (?,?,?)");
 		q.setParameters(idLocal, null, direccion);
 		return (long) q.executeUnique();

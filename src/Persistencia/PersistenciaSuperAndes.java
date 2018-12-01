@@ -73,7 +73,7 @@ public class PersistenciaSuperAndes {
 		//7
 		tablas.add("Pedidos");
 		//8
-		tablas.add("Local");
+		tablas.add("Locales");
 		//9
 		tablas.add("Estante");
 		//10
@@ -225,6 +225,7 @@ public class PersistenciaSuperAndes {
 		sqlCarrito = new SQLCarrito(this);
 		sqlProductosCarrito = new SQLProductosCarrito(this);
 		sqlProducto = new SQLProducto(this);
+		sqlLocal = new SQLLocal(this);
 	}
 	
 	private String darDetalleException(Exception e) 
