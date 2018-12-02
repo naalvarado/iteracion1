@@ -2,7 +2,7 @@ package Negocio;
 
 import java.sql.Timestamp;
 
-public class Producto {
+public class Producto implements VOProducto{
 	
 	private long ID;
 	private long sucursal;
